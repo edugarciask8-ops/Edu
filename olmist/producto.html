@@ -633,17 +633,15 @@
       negro: 'gid://shopify/ProductVariant/53129785606480'
     };
     var selectedVariant = VARIANTS.rosa;
-    var shopifyUI = null;
-    var shopifyCart = null;
+    var cartPromise = null;
 
     var client = ShopifyBuy.buildClient({
       domain: 'qtjre1-wv.myshopify.com',
       storefrontAccessToken: '79b4147cd4b3ab43c7615e8e5a8054fe',
     });
 
-    ShopifyBuy.UI.onReady(client).then(function(ui) {
-      shopifyUI = ui;
-      ui.createComponent('cart', {
+    cartPromise = ShopifyBuy.UI.onReady(client).then(function(ui) {
+      return ui.createComponent('cart', {
         node: document.getElementById('shopify-cart-container'),
         options: {
           cart: {
@@ -666,27 +664,25 @@
             }
           }
         }
-      }).then(function(cart) {
-        shopifyCart = cart;
       });
     });
 
     function addToCart() {
       var qty = parseInt(document.getElementById('qtyInput').value) || 1;
       var btn = document.getElementById('btnAddToCart');
-      if (!shopifyCart) {
-        window.location.href = 'https://qtjre1-wv.myshopify.com/cart/' + selectedVariant.split('/').pop() + ':' + qty;
-        return;
-      }
       btn.textContent = 'Añadiendo...';
       btn.disabled = true;
-      shopifyCart.addVariantToCart({ id: selectedVariant, quantity: qty }).then(function() {
-        shopifyCart.open();
+      cartPromise.then(function(cart) {
+        return cart.addVariantToCart({ id: selectedVariant, quantity: qty }).then(function() {
+          cart.open();
+        });
+      }).then(function() {
         btn.textContent = 'Añadir al carrito';
         btn.disabled = false;
       }).catch(function() {
         btn.textContent = 'Añadir al carrito';
         btn.disabled = false;
+        window.location.href = 'https://qtjre1-wv.myshopify.com/cart/' + selectedVariant.split('/').pop() + ':' + qty;
       });
     }
 
