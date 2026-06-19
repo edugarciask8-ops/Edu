@@ -634,24 +634,7 @@
 
     function addToCart() {
       var qty = parseInt(document.getElementById('qtyInput').value) || 1;
-      var btn = document.getElementById('btnAddToCart');
-      btn.textContent = 'Añadiendo...';
-      btn.disabled = true;
-
-      fetch('https://qtjre1-wv.myshopify.com/cart/add.js', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: selectedVariant, quantity: qty })
-      })
-      .then(function(r) { return r.json(); })
-      .then(function() {
-        window.location.href = 'https://qtjre1-wv.myshopify.com/cart';
-      })
-      .catch(function() {
-        btn.textContent = 'Añadir al carrito';
-        btn.disabled = false;
-        alert('Error al añadir. Inténtalo de nuevo.');
-      });
+      window.location.href = 'https://qtjre1-wv.myshopify.com/cart/' + selectedVariant + ':' + qty;
     }
 
     function changeImage(thumb, src) {
