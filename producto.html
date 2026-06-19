@@ -528,9 +528,16 @@
         </div>
       </div>
 
-      <!-- SHOPIFY BUY BUTTON -->
+      <!-- BOTÓN AÑADIR AL CARRITO -->
       <div class="shopify-btn-wrapper">
-        <div id='product-component-1781898143562'></div>
+        <button id="btnAddToCart" onclick="addToCart()" style="
+          width:100%; padding:1.1rem; background:#0a0a0a; color:#fafafa;
+          border:none; font-family:'Inter',sans-serif; font-size:0.8rem;
+          letter-spacing:0.12em; text-transform:uppercase; cursor:pointer;
+          transition:background 0.25s;
+        " onmouseover="this.style.background='#c8956c'" onmouseout="this.style.background='#0a0a0a'">
+          Añadir al carrito
+        </button>
       </div>
 
       <button class="btn-wishlist">♡ Añadir a favoritos</button>
@@ -618,81 +625,35 @@
     </div>
   </div>
 
-  <!-- SHOPIFY BUY BUTTON SCRIPT -->
-  <script type="text/javascript">
-  (function () {
-    var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
-    if (window.ShopifyBuy) {
-      if (window.ShopifyBuy.UI) { ShopifyBuyInit(); } else { loadScript(); }
-    } else { loadScript(); }
-    function loadScript() {
-      var script = document.createElement('script');
-      script.async = true;
-      script.src = scriptURL;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(script);
-      script.onload = ShopifyBuyInit;
-    }
-    function ShopifyBuyInit() {
-      var client = ShopifyBuy.buildClient({
-        domain: 'qtjre1-wv.myshopify.com',
-        storefrontAccessToken: '79b4147cd4b3ab43c7615e8e5a8054fe',
-      });
-      ShopifyBuy.UI.onReady(client).then(function (ui) {
-        ui.createComponent('product', {
-          id: '10525682401616',
-          node: document.getElementById('product-component-1781898143562'),
-          moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
-          options: {
-            "product": {
-              "contents": {
-                "img": false,
-                "title": false,
-                "price": false
-              },
-              "styles": {
-                "button": {
-                  "font-family": "Inter, sans-serif",
-                  "font-size": "0.8rem",
-                  "letter-spacing": "0.12em",
-                  "text-transform": "uppercase",
-                  "background-color": "#0a0a0a",
-                  "color": "#fafafa",
-                  "padding": "1.1rem 0",
-                  "width": "100%",
-                  ":hover": { "background-color": "#c8956c" },
-                  ":focus": { "background-color": "#c8956c" },
-                  "border-radius": "0"
-                }
-              },
-              "text": { "button": "Añadir al carrito" }
-            },
-            "cart": {
-              "text": { "total": "Subtotal", "button": "Finalizar compra" },
-              "styles": {
-                "button": {
-                  "background-color": "#c8956c",
-                  "color": "#0a0a0a",
-                  ":hover": { "background-color": "#e8b99a" },
-                  "border-radius": "0"
-                }
-              }
-            },
-            "toggle": {
-              "styles": {
-                "toggle": {
-                  "background-color": "#c8956c",
-                  ":hover": { "background-color": "#e8b99a" }
-                }
-              }
-            }
-          }
-        });
-      });
-    }
-  })();
-  </script>
-
   <script>
+    var VARIANTS = {
+      rosa: '7445030651625',
+      negro: '313045969905'
+    };
+    var selectedVariant = VARIANTS.rosa;
+
+    function addToCart() {
+      var qty = parseInt(document.getElementById('qtyInput').value) || 1;
+      var btn = document.getElementById('btnAddToCart');
+      btn.textContent = 'Añadiendo...';
+      btn.disabled = true;
+
+      fetch('https://qtjre1-wv.myshopify.com/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: selectedVariant, quantity: qty })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function() {
+        window.location.href = 'https://qtjre1-wv.myshopify.com/cart';
+      })
+      .catch(function() {
+        btn.textContent = 'Añadir al carrito';
+        btn.disabled = false;
+        alert('Error al añadir. Inténtalo de nuevo.');
+      });
+    }
+
     function changeImage(thumb, src) {
       document.getElementById('mainImg').src = src;
       document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
@@ -703,6 +664,7 @@
       document.querySelectorAll('.color-option').forEach(c => c.classList.remove('active'));
       el.classList.add('active');
       document.getElementById('colorLabel').textContent = label;
+      selectedVariant = VARIANTS[el.dataset.color];
       if (el.dataset.color === 'rosa') {
         changeImage(document.querySelector('.thumb'), '5a9bab23-b0d5-43d6-83cb-b3b934ec2a1e_processed.png');
       } else {
