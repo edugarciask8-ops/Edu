@@ -965,8 +965,95 @@
     <span class="section-eyebrow">Únete a Olmist</span>
     <h2 class="section-title">Tu mejor<br /><em>día de pelo</em><br />empieza aquí.</h2>
     <p class="cta-subtitle">Sin cables. Sin compromisos. Solo resultados profesionales donde quieras, cuando quieras.</p>
-    <a href="#" class="btn-primary-rose">Comprar Ahora</a>
+    <div id='product-component-1781898143562' style="margin-top: 2.5rem; position: relative; z-index: 1;"></div>
   </section>
+
+  <script type="text/javascript">
+  (function () {
+    var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+    if (window.ShopifyBuy) {
+      if (window.ShopifyBuy.UI) { ShopifyBuyInit(); } else { loadScript(); }
+    } else { loadScript(); }
+    function loadScript() {
+      var script = document.createElement('script');
+      script.async = true;
+      script.src = scriptURL;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(script);
+      script.onload = ShopifyBuyInit;
+    }
+    function ShopifyBuyInit() {
+      var client = ShopifyBuy.buildClient({
+        domain: 'qtjre1-wv.myshopify.com',
+        storefrontAccessToken: '79b4147cd4b3ab43c7615e8e5a8054fe',
+      });
+      ShopifyBuy.UI.onReady(client).then(function (ui) {
+        ui.createComponent('product', {
+          id: '10525682401616',
+          node: document.getElementById('product-component-1781898143562'),
+          moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
+          options: {
+            "product": {
+              "styles": {
+                "product": {
+                  "@media (min-width: 601px)": {
+                    "max-width": "400px",
+                    "margin-left": "auto",
+                    "margin-right": "auto",
+                    "margin-bottom": "0"
+                  }
+                },
+                "title": {
+                  "font-family": "Georgia, serif",
+                  "color": "#fafafa",
+                  "font-size": "1.2rem"
+                },
+                "price": {
+                  "color": "#c8956c",
+                  "font-size": "1.4rem"
+                },
+                "compareAt": { "color": "rgba(255,255,255,0.4)" },
+                "button": {
+                  "font-family": "Inter, sans-serif",
+                  "font-size": "0.8rem",
+                  "letter-spacing": "0.12em",
+                  "text-transform": "uppercase",
+                  "background-color": "#c8956c",
+                  "color": "#0a0a0a",
+                  "padding": "1.1rem 2.8rem",
+                  ":hover": { "background-color": "#e8b99a" },
+                  ":focus": { "background-color": "#e8b99a" },
+                  "border-radius": "0"
+                }
+              },
+              "text": { "button": "Añadir al carrito" }
+            },
+            "cart": {
+              "text": { "total": "Subtotal", "button": "Finalizar compra" },
+              "styles": {
+                "button": {
+                  "background-color": "#c8956c",
+                  "color": "#0a0a0a",
+                  ":hover": { "background-color": "#e8b99a" },
+                  "border-radius": "0"
+                }
+              }
+            },
+            "modalProduct": {
+              "contents": { "img": false, "imgWithCarousel": true, "button": false, "buttonWithQuantity": true },
+              "text": { "button": "Añadir al carrito" }
+            },
+            "option": {},
+            "toggle": {
+              "styles": {
+                "toggle": { "background-color": "#c8956c", ":hover": { "background-color": "#e8b99a" } }
+              }
+            }
+          }
+        });
+      });
+    }
+  })();
+  </script>
 
   <!-- FOOTER -->
   <footer>
