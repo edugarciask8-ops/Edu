@@ -1,0 +1,27 @@
+name: Arcoptima - Post diario Instagram
+
+on:
+  schedule:
+    - cron: "0 10 * * *"  # cada día a las 10:00 UTC
+  workflow_dispatch:  # permite lanzarlo manualmente
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instalar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependencias
+        run: pip install requests
+
+      - name: Generar y publicar post
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          INSTAGRAM_TOKEN: ${{ secrets.INSTAGRAM_TOKEN }}
+          INSTAGRAM_ACCOUNT_ID: ${{ secrets.INSTAGRAM_ACCOUNT_ID }}
+        run: python arcoptima/post.py
