@@ -828,7 +828,7 @@
   </footer>
 
   <script>
-    // Scroll video storytelling
+    // Scroll video storytelling — play/pause según visibilidad
     const storyVideo = document.getElementById('storyVideo');
     const videoStory = document.querySelector('.video-story');
     const captions = [
@@ -837,22 +837,30 @@
       document.getElementById('caption3'),
     ];
 
-    storyVideo.addEventListener('loadedmetadata', () => {
-      window.addEventListener('scroll', () => {
-        const rect = videoStory.getBoundingClientRect();
-        const sectionHeight = videoStory.offsetHeight - window.innerHeight;
-        const scrolled = Math.max(0, -rect.top);
-        const progress = Math.min(1, scrolled / sectionHeight);
+    // Reproducir cuando la sección entra en pantalla
+    const videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          storyVideo.currentTime = 0;
+          storyVideo.play();
+        } else {
+          storyVideo.pause();
+        }
+      });
+    }, { threshold: 0.1 });
 
-        // Controlar el tiempo del vídeo
-        storyVideo.currentTime = progress * storyVideo.duration;
+    videoObserver.observe(videoStory);
 
-        // Mostrar caption según progreso
-        captions.forEach(c => c.classList.remove('active'));
-        if (progress < 0.33) captions[0].classList.add('active');
-        else if (progress < 0.66) captions[1].classList.add('active');
-        else captions[2].classList.add('active');
-      }, { passive: true });
+    // Cambiar captions según el tiempo del vídeo
+    storyVideo.addEventListener('timeupdate', () => {
+      const t = storyVideo.currentTime;
+      const d = storyVideo.duration || 1;
+      const p = t / d;
+
+      captions.forEach(c => c.classList.remove('active'));
+      if (p < 0.33) captions[0].classList.add('active');
+      else if (p < 0.66) captions[1].classList.add('active');
+      else captions[2].classList.add('active');
     });
 
     // Intersection Observer para animaciones al hacer scroll
