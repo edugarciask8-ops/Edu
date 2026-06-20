@@ -643,103 +643,73 @@
 
   <script>
     var VARIANTS = {
-      rosa:  { id: 'gid://shopify/ProductVariant/53129785573712', name: 'Cotton Pink',  price: '89.00' },
-      negro: { id: 'gid://shopify/ProductVariant/53129785606480', name: 'Black Onyx',   price: '89.00' }
+      rosa:  { numericId: '53129785573712', name: 'Cotton Pink', price: 89.00 },
+      negro: { numericId: '53129785606480', name: 'Black Onyx',  price: 89.00 }
     };
     var selectedColor = 'rosa';
-    var cartId = localStorage.getItem('olmist_cart_id') || null;
-    var cartLines = [];
-
     var SHOP = 'qtjre1-wv.myshopify.com';
-    var TOKEN = '79b4147cd4b3ab43c7615e8e5a8054fe';
 
-    function gql(query, variables) {
-      return fetch('https://' + SHOP + '/api/2024-01/graphql.json', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Shopify-Storefront-Access-Token': TOKEN
-        },
-        body: JSON.stringify({ query: query, variables: variables })
-      }).then(function(r) { return r.json(); });
-    }
+    // carrito local: { numericId -> { name, price, qty } }
+    var cart = {};
 
     function addToCart() {
       var qty = parseInt(document.getElementById('qtyInput').value) || 1;
       var btn = document.getElementById('btnAddToCart');
-      var variant = VARIANTS[selectedColor];
-      btn.textContent = 'Añadiendo...';
-      btn.disabled = true;
+      var v = VARIANTS[selectedColor];
 
-      var promise;
-      if (!cartId) {
-        promise = gql(
-          'mutation cartCreate($lines:[CartLineInput!]!){cartCreate(input:{lines:$lines}){cart{id checkoutUrl lines(first:20){edges{node{id quantity merchandise{...on ProductVariant{id title product{title}price{amount}}}}}}}}errors{field message}}}',
-          { lines: [{ merchandiseId: variant.id, quantity: qty }] }
-        ).then(function(res) {
-          var cart = res.data.cartCreate.cart;
-          cartId = cart.id;
-          localStorage.setItem('olmist_cart_id', cartId);
-          return cart;
-        });
+      if (cart[v.numericId]) {
+        cart[v.numericId].qty += qty;
       } else {
-        promise = gql(
-          'mutation cartLinesAdd($cartId:ID!,$lines:[CartLineInput!]!){cartLinesAdd(cartId:$cartId,lines:$lines){cart{id checkoutUrl lines(first:20){edges{node{id quantity merchandise{...on ProductVariant{id title product{title}price{amount}}}}}}}userErrors{field message}}}',
-          { cartId: cartId, lines: [{ merchandiseId: variant.id, quantity: qty }] }
-        ).then(function(res) {
-          var result = res.data.cartLinesAdd;
-          if (result.userErrors && result.userErrors.length) {
-            // Cart expired, create new
-            cartId = null;
-            localStorage.removeItem('olmist_cart_id');
-            return addToCart();
-          }
-          return result.cart;
-        });
+        cart[v.numericId] = { name: v.name, price: v.price, qty: qty };
       }
 
-      promise.then(function(cart) {
-        btn.textContent = 'Añadir al carrito';
-        btn.disabled = false;
-        renderCart(cart);
-        openCart();
-      }).catch(function() {
-        btn.textContent = 'Añadir al carrito';
-        btn.disabled = false;
-        var id = variant.id.split('/').pop();
-        window.location.href = 'https://' + SHOP + '/cart/' + id + ':' + qty;
-      });
+      btn.textContent = '¡Añadido!';
+      setTimeout(function() { btn.textContent = 'Añadir al carrito'; btn.disabled = false; }, 800);
+      btn.disabled = true;
+
+      renderCart();
+      openCart();
     }
 
-    function renderCart(cart) {
-      var lines = cart.lines.edges;
+    function removeFromCart(id) {
+      delete cart[id];
+      renderCart();
+    }
+
+    function renderCart() {
       var itemsEl = document.getElementById('cart-items');
       var footerEl = document.getElementById('cart-footer');
       var totalEl = document.getElementById('cart-total');
       var checkoutEl = document.getElementById('checkout-btn');
+      var keys = Object.keys(cart);
 
-      if (!lines.length) {
+      if (!keys.length) {
         itemsEl.innerHTML = '<p style="color:#6b6b6b;text-align:center;padding:2rem 0;">Tu carrito está vacío</p>';
         footerEl.style.display = 'none';
         return;
       }
 
       var total = 0;
-      itemsEl.innerHTML = lines.map(function(edge) {
-        var n = edge.node;
-        var price = parseFloat(n.merchandise.price.amount);
-        total += price * n.quantity;
+      itemsEl.innerHTML = keys.map(function(id) {
+        var item = cart[id];
+        var subtotal = item.price * item.qty;
+        total += subtotal;
         return '<div style="display:flex;justify-content:space-between;align-items:center;padding:1rem 0;border-bottom:1px solid rgba(0,0,0,0.06);">' +
           '<div>' +
-            '<div style="font-weight:500;font-size:0.9rem;">' + n.merchandise.product.title + '</div>' +
-            '<div style="color:#6b6b6b;font-size:0.8rem;margin-top:0.25rem;">' + n.merchandise.title + ' · ×' + n.quantity + '</div>' +
+            '<div style="font-weight:500;font-size:0.9rem;">Cepillo Alisador Olmist</div>' +
+            '<div style="color:#6b6b6b;font-size:0.8rem;margin-top:0.25rem;">' + item.name + ' · ×' + item.qty + '</div>' +
           '</div>' +
-          '<div style="font-size:0.9rem;font-weight:500;">' + (price * n.quantity).toFixed(2) + ' €</div>' +
+          '<div style="display:flex;align-items:center;gap:1rem;">' +
+            '<span style="font-size:0.9rem;font-weight:500;">' + subtotal.toFixed(2) + ' €</span>' +
+            '<button onclick="removeFromCart(\'' + id + '\')" style="background:none;border:none;cursor:pointer;color:#6b6b6b;font-size:1rem;">✕</button>' +
+          '</div>' +
         '</div>';
       }).join('');
 
       totalEl.textContent = total.toFixed(2) + ' €';
-      checkoutEl.href = cart.checkoutUrl;
+
+      var cartParam = keys.map(function(id) { return id + ':' + cart[id].qty; }).join(',');
+      checkoutEl.href = 'https://' + SHOP + '/cart/' + cartParam;
       footerEl.style.display = 'block';
     }
 
