@@ -539,6 +539,28 @@
       footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem; }
     }
 
+    /* SPOTLIGHT CURSOR */
+    #hero-title {
+      position: relative;
+      cursor: default;
+    }
+
+    .hero-word {
+      display: inline-block;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+      color: var(--white);
+    }
+
+    #hero-title.spotlight-active .hero-word {
+      color: rgba(255,255,255,0.18);
+      text-shadow: none;
+    }
+
+    #hero-title.spotlight-active .hero-word.lit {
+      color: var(--rose-gold);
+      text-shadow: 0 0 40px rgba(200,149,108,0.6), 0 0 80px rgba(200,149,108,0.2);
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .scene-content, .temp-header, .temp-card, .testimonial-card, .cta-content {
         opacity: 1 !important;
@@ -561,8 +583,8 @@
     <div class="scene-overlay"></div>
     <div class="scene-content" id="hero-content">
       <span class="scene-eyebrow">Nueva Colección Inalámbrica</span>
-      <h1 class="scene-title">
-        Estilo sin<br /><em>límites</em>,<br />sin cables.
+      <h1 class="scene-title" id="hero-title">
+        <span class="hero-word">Estilo</span> <span class="hero-word">sin</span><br /><em><span class="hero-word">límites</span></em>,<br /><span class="hero-word">sin</span> <span class="hero-word">cables.</span>
       </h1>
       <p class="scene-sub">Tecnología de calentamiento profesional. Listo en 30 segundos, perfecto en cualquier lugar.</p>
       <a href="producto.html" class="btn-ghost">Descubrir ahora</a>
@@ -741,6 +763,35 @@
         heroBg.style.transform = `scale(1.05) translateY(${scrolled * 0.2}px)`;
       }
     }, { passive: true });
+
+    // Spotlight cursor en el título hero
+    const heroTitle = document.getElementById('hero-title');
+    const heroWords = heroTitle.querySelectorAll('.hero-word');
+
+    heroTitle.addEventListener('mousemove', (e) => {
+      heroTitle.classList.add('spotlight-active');
+      const rect = heroTitle.getBoundingClientRect();
+      const mx = e.clientX;
+      const my = e.clientY;
+      const radius = 120;
+
+      heroWords.forEach(word => {
+        const wr = word.getBoundingClientRect();
+        const cx = wr.left + wr.width / 2;
+        const cy = wr.top + wr.height / 2;
+        const dist = Math.sqrt((mx - cx) ** 2 + (my - cy) ** 2);
+        if (dist < radius) {
+          word.classList.add('lit');
+        } else {
+          word.classList.remove('lit');
+        }
+      });
+    });
+
+    heroTitle.addEventListener('mouseleave', () => {
+      heroTitle.classList.remove('spotlight-active');
+      heroWords.forEach(w => w.classList.remove('lit'));
+    });
 
     // Trigger hero inmediatamente
     setTimeout(() => {
