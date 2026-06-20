@@ -97,7 +97,7 @@
 
     .gallery-main {
       width: 100%;
-      height: 75%;
+      height: 100%;
       overflow: hidden;
       cursor: zoom-in;
     }
@@ -110,30 +110,6 @@
     }
 
     .gallery-main:hover img { transform: scale(1.04); }
-
-    .gallery-thumbs {
-      display: flex;
-      gap: 1px;
-      height: 25%;
-      background: rgba(0,0,0,0.05);
-    }
-
-    .thumb {
-      flex: 1;
-      overflow: hidden;
-      cursor: pointer;
-      opacity: 0.6;
-      transition: opacity 0.2s;
-    }
-
-    .thumb.active { opacity: 1; }
-    .thumb:hover { opacity: 0.9; }
-
-    .thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
 
     /* INFO SIDE */
     .product-info {
@@ -493,18 +469,7 @@
     <!-- GALERÍA -->
     <div class="product-gallery">
       <div class="gallery-main" id="galleryMain">
-        <img src="5a9bab23-b0d5-43d6-83cb-b3b934ec2a1e_processed.png" alt="Cepillo Alisador Inalámbrico Olmist Rosa" id="mainImg" />
-      </div>
-      <div class="gallery-thumbs">
-        <div class="thumb active" onclick="changeImage(this, '5a9bab23-b0d5-43d6-83cb-b3b934ec2a1e_processed.png')">
-          <img src="5a9bab23-b0d5-43d6-83cb-b3b934ec2a1e_processed.png" alt="Vista 1" />
-        </div>
-        <div class="thumb" onclick="changeImage(this, '7d504e39-af12-4d3b-a75c-30a0aac4ef61_processed.png')">
-          <img src="7d504e39-af12-4d3b-a75c-30a0aac4ef61_processed.png" alt="Vista 2" />
-        </div>
-        <div class="thumb" onclick="changeImage(this, '3c92958b-0e06-4308-9b52-07bcef6c125e.png')">
-          <img src="3c92958b-0e06-4308-9b52-07bcef6c125e.png" alt="Vista 3" />
-        </div>
+        <img src="7d504e39-af12-4d3b-a75c-30a0aac4ef61_processed.png" alt="Cepillo Alisador Inalámbrico Olmist Negro" id="mainImg" />
       </div>
     </div>
 
@@ -523,13 +488,13 @@
 
       <!-- COLOR -->
       <div>
-        <div class="selector-label">Color — <strong id="colorLabel">Cotton Pink</strong></div>
+        <div class="selector-label">Color — <strong id="colorLabel">Black Onyx</strong></div>
         <div class="color-options">
-          <div class="color-option active" data-color="rosa" onclick="selectColor(this, 'Cotton Pink')">
-            <span class="color-tooltip">Cotton Pink</span>
-          </div>
-          <div class="color-option" data-color="negro" onclick="selectColor(this, 'Black Onyx')">
+          <div class="color-option active" data-color="negro" onclick="selectColor(this, 'Black Onyx')">
             <span class="color-tooltip">Black Onyx</span>
+          </div>
+          <div class="color-option" data-color="rosa" onclick="selectColor(this, 'Cotton Pink')">
+            <span class="color-tooltip">Cotton Pink</span>
           </div>
         </div>
       </div>
@@ -646,7 +611,7 @@
       rosa:  { numericId: '53129785573712', name: 'Cotton Pink', price: 89.00 },
       negro: { numericId: '53129785606480', name: 'Black Onyx',  price: 89.00 }
     };
-    var selectedColor = 'rosa';
+    var selectedColor = 'negro';
     var SHOP = 'qtjre1-wv.myshopify.com';
 
     // carrito local: { numericId -> { name, price, qty } }
@@ -736,11 +701,10 @@
       el.classList.add('active');
       document.getElementById('colorLabel').textContent = label;
       selectedColor = el.dataset.color;
-      if (el.dataset.color === 'rosa') {
-        changeImage(document.querySelector('.thumb'), '5a9bab23-b0d5-43d6-83cb-b3b934ec2a1e_processed.png');
-      } else {
-        changeImage(document.querySelectorAll('.thumb')[1], '7d504e39-af12-4d3b-a75c-30a0aac4ef61_processed.png');
-      }
+      var src = el.dataset.color === 'negro'
+        ? '7d504e39-af12-4d3b-a75c-30a0aac4ef61_processed.png'
+        : '5a9bab23-b0d5-43d6-83cb-b3b934ec2a1e_processed.png';
+      document.getElementById('mainImg').src = src;
     }
 
     function changeQty(delta) {
