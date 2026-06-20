@@ -525,6 +525,58 @@
 
     .footer-links a:hover { color: var(--rose-gold); }
 
+    /* SCROLL VIDEO STORYTELLING */
+    .video-story {
+      height: 400vh;
+      position: relative;
+    }
+
+    .video-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .video-sticky video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.85;
+    }
+
+    .video-caption {
+      position: absolute;
+      bottom: 12%;
+      left: 6%;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      pointer-events: none;
+    }
+
+    .video-caption.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .video-caption h2 {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 5vw, 5rem);
+      font-weight: 500;
+      line-height: 1.1;
+      color: var(--white);
+    }
+
+    .video-caption h2 em {
+      font-style: italic;
+      color: var(--rose-gold);
+    }
+
     /* RESPONSIVE */
     @media (max-width: 1024px) {
       nav { padding: 1.2rem 1.5rem; }
@@ -607,6 +659,25 @@
     <div class="scroll-hint">
       <div class="scroll-line"></div>
       <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- SCROLL VIDEO STORYTELLING -->
+  <section class="video-story">
+    <div class="video-sticky">
+      <video id="storyVideo" src="producto.mp4" muted playsinline preload="auto"></video>
+      <div class="video-caption" id="caption1">
+        <span class="scene-eyebrow">Diseño</span>
+        <h2>Precisión<br /><em>artesanal.</em></h2>
+      </div>
+      <div class="video-caption" id="caption2">
+        <span class="scene-eyebrow">Tecnología</span>
+        <h2>Calor en<br /><em>30 segundos.</em></h2>
+      </div>
+      <div class="video-caption" id="caption3">
+        <span class="scene-eyebrow">Libertad</span>
+        <h2>Sin cables.<br /><em>Sin límites.</em></h2>
+      </div>
     </div>
   </section>
 
@@ -757,6 +828,33 @@
   </footer>
 
   <script>
+    // Scroll video storytelling
+    const storyVideo = document.getElementById('storyVideo');
+    const videoStory = document.querySelector('.video-story');
+    const captions = [
+      document.getElementById('caption1'),
+      document.getElementById('caption2'),
+      document.getElementById('caption3'),
+    ];
+
+    storyVideo.addEventListener('loadedmetadata', () => {
+      window.addEventListener('scroll', () => {
+        const rect = videoStory.getBoundingClientRect();
+        const sectionHeight = videoStory.offsetHeight - window.innerHeight;
+        const scrolled = Math.max(0, -rect.top);
+        const progress = Math.min(1, scrolled / sectionHeight);
+
+        // Controlar el tiempo del vídeo
+        storyVideo.currentTime = progress * storyVideo.duration;
+
+        // Mostrar caption según progreso
+        captions.forEach(c => c.classList.remove('active'));
+        if (progress < 0.33) captions[0].classList.add('active');
+        else if (progress < 0.66) captions[1].classList.add('active');
+        else captions[2].classList.add('active');
+      }, { passive: true });
+    });
+
     // Intersection Observer para animaciones al hacer scroll
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
