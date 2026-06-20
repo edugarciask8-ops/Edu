@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Olmist — Estilo Inalámbrico</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #fafafa;
+      --rose-gold: #c8956c;
+      --rose-gold-light: #e8b99a;
+      --serif: 'Playfair Display', Georgia, serif;
+      --sans: 'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--black);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 3rem;
+      mix-blend-mode: difference;
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+    }
+
+    .nav-cta {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.4);
+      padding-bottom: 2px;
+      transition: border-color 0.2s;
+    }
+
+    .nav-cta:hover { border-color: var(--white); }
+
+    /* SECCIÓN HERO */
+    .scene {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .scene-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.05);
+      transition: transform 0.1s linear;
+    }
+
+    .scene-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.5) 100%);
+    }
+
+    .scene-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 2rem;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    .scene-content.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .scene-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--rose-gold);
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+
+    .scene-title {
+      font-family: var(--serif);
+      font-size: clamp(3.5rem, 8vw, 8rem);
+      font-weight: 500;
+      line-height: 1.0;
+      color: var(--white);
+      margin-bottom: 2rem;
+    }
+
+    .scene-title em {
+      font-style: italic;
+      color: var(--rose-gold);
+    }
+
+    .scene-sub {
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+
+    .btn-ghost {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.5);
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .btn-ghost:hover {
+      background: var(--white);
+      color: var(--black);
+      border-color: var(--white);
+    }
+
+    .btn-rose {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--rose-gold);
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .btn-rose:hover { background: var(--rose-gold-light); }
+
+    /* SCROLL INDICATOR */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0.5;
+    }
+
+    .scroll-hint span {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--white), transparent);
+      animation: scrollLine 1.5s ease-in-out infinite;
+    }
+
+    @keyframes scrollLine {
+      0% { transform: scaleY(0); transform-origin: top; }
+      50% { transform: scaleY(1); transform-origin: top; }
+      51% { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* SECCIÓN STICKY — TEXTO LATERAL */
+    .sticky-section {
+      position: relative;
+    }
+
+    .sticky-track {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .sticky-track .scene-bg {
+      height: 100%;
+    }
+
+    /* STATS EN LÍNEA */
+    .stats-bar {
+      background: var(--white);
+      color: var(--black);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      padding: 2.5rem 5rem;
+      gap: 1rem;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: var(--serif);
+      font-size: 2.2rem;
+      font-weight: 400;
+      color: var(--rose-gold);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.45);
+      margin-top: 0.3rem;
+      display: block;
+    }
+
+    /* SECCIÓN FEATURE — HORIZONTAL SPLIT */
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
+    }
+
+    .split-image {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .split-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s ease;
+    }
+
+    .split:hover .split-image img { transform: scale(1.03); }
+
+    .split-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 5rem;
+    }
+
+    .split-content.dark {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .split-content.light {
+      background: var(--white);
+      color: var(--black);
+    }
+
+    .split-content .scene-title {
+      font-size: clamp(2.5rem, 4vw, 4.5rem);
+      text-align: left;
+      margin-bottom: 1.5rem;
+    }
+
+    .split-content.light .scene-title { color: var(--black); }
+
+    .feature-list {
+      list-style: none;
+      margin: 2rem 0 3rem;
+    }
+
+    .feature-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.9rem;
+      font-weight: 300;
+      line-height: 1.5;
+    }
+
+    .split-content.light .feature-list li {
+      border-bottom-color: rgba(0,0,0,0.08);
+    }
+
+    .feature-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--rose-gold);
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+
+    /* TEMPERATURA */
+    .temp-section {
+      background: var(--black);
+      padding: 8rem 5rem;
+    }
+
+    .temp-header {
+      text-align: center;
+      margin-bottom: 5rem;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .temp-header.visible { opacity: 1; transform: translateY(0); }
+
+    .temp-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .temp-card {
+      background: var(--black);
+      padding: 3.5rem 3rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s;
+    }
+
+    .temp-card:nth-child(2) { transition-delay: 0.1s; }
+    .temp-card:nth-child(3) { transition-delay: 0.2s; }
+
+    .temp-card.visible { opacity: 1; transform: translateY(0); }
+    .temp-card:hover { background: #111; }
+
+    .temp-degree {
+      font-family: var(--serif);
+      font-size: 4rem;
+      font-weight: 400;
+      color: var(--rose-gold);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .temp-level {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 1.5rem;
+    }
+
+    .temp-type {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      color: var(--white);
+      margin-bottom: 0.75rem;
+    }
+
+    .temp-desc {
+      font-size: 0.83rem;
+      font-weight: 300;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* TESTIMONIALS */
+    .testimonials {
+      background: var(--white);
+      color: var(--black);
+      padding: 8rem 5rem;
+    }
+
+    .testimonials .temp-header { color: var(--black); }
+    .testimonials .scene-eyebrow { color: var(--rose-gold); }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+
+    .testimonial-card {
+      padding: 2.5rem;
+      border: 1px solid rgba(0,0,0,0.08);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .testimonial-card:nth-child(2) { transition-delay: 0.1s; }
+    .testimonial-card:nth-child(3) { transition-delay: 0.2s; }
+    .testimonial-card.visible { opacity: 1; transform: translateY(0); }
+
+    .testimonial-stars {
+      color: var(--rose-gold);
+      letter-spacing: 0.1em;
+      margin-bottom: 1.2rem;
+      font-size: 0.85rem;
+    }
+
+    .testimonial-text {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-style: italic;
+      line-height: 1.65;
+      color: var(--black);
+      margin-bottom: 1.5rem;
+    }
+
+    .testimonial-author {
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.4);
+    }
+
+    /* CTA FINAL */
+    .cta-final {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .cta-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('../olmist/7d504e39-af12-4d3b-a75c-30a0aac4ef61_processed.png');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.25);
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 2rem;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    .cta-content.visible { opacity: 1; transform: translateY(0); }
+
+    .cta-final .scene-title {
+      font-size: clamp(3rem, 6vw, 6rem);
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-final .scene-sub { margin-bottom: 3rem; }
+
+    /* FOOTER */
+    footer {
+      background: var(--black);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 2.5rem 5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .footer-copy {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.08em;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--rose-gold); }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .stats-bar { grid-template-columns: repeat(2, 1fr); padding: 2.5rem 2rem; }
+      .split { grid-template-columns: 1fr; }
+      .split-image { min-height: 60vw; }
+      .split-content { padding: 4rem 2rem; }
+      .temp-section { padding: 5rem 2rem; }
+      .temp-grid { grid-template-columns: 1fr; }
+      .testimonials { padding: 5rem 2rem; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .scene-content, .temp-header, .temp-card, .testimonial-card, .cta-content {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="nav-logo">Olmist</a>
+    <a href="olmist-v2/producto.html" class="nav-cta">Comprar</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="scene">
+    <div class="scene-bg" style="background-image: url('../olmist/7d504e39-af12-4d3b-a75c-30a0aac4ef61_processed.png');"></div>
+    <div class="scene-overlay"></div>
+    <div class="scene-content" id="hero-content">
+      <span class="scene-eyebrow">Nueva Colección Inalámbrica</span>
+      <h1 class="scene-title">
+        Estilo sin<br /><em>límites</em>,<br />sin cables.
+      </h1>
+      <p class="scene-sub">Tecnología de calentamiento profesional. Listo en 30 segundos, perfecto en cualquier lugar.</p>
+      <a href="../olmist/producto.html" class="btn-ghost">Descubrir ahora</a>
+    </div>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat">
+      <span class="stat-number">30s</span>
+      <span class="stat-label">Calentamiento</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">200°C</span>
+      <span class="stat-label">Temperatura máx.</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">3</span>
+      <span class="stat-label">Niveles de calor</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">100%</span>
+      <span class="stat-label">Inalámbrico</span>
+    </div>
+  </div>
+
+  <!-- SPLIT 1 — BLACK ONYX -->
+  <section class="split">
+    <div class="split-image">
+      <img src="../olmist/7d504e39-af12-4d3b-a75c-30a0aac4ef61_processed.png" alt="Olmist Black Onyx" />
+    </div>
+    <div class="split-content dark animate-in">
+      <span class="scene-eyebrow">Black Onyx</span>
+      <h2 class="scene-title">Poder<br /><em>oscuro</em>.</h2>
+      <ul class="feature-list">
+        <li><div class="feature-dot"></div><span><strong>Calentamiento en 30 segundos</strong> — Listo cuando tú lo necesitas.</span></li>
+        <li><div class="feature-dot"></div><span><strong>200°C de potencia</strong> — Para los cabellos más rebeldes.</span></li>
+        <li><div class="feature-dot"></div><span><strong>Protección anti-quemaduras</strong> — Tecnología que cuida tu cabello.</span></li>
+        <li><div class="feature-dot"></div><span><strong>Diseño compacto</strong> — Cabe en cualquier bolso.</span></li>
+      </ul>
+      <a href="../olmist/producto.html" class="btn-ghost">Ver Black Onyx</a>
+    </div>
+  </section>
+
+  <!-- SPLIT 2 — COTTON PINK -->
+  <section class="split">
+    <div class="split-content light animate-in">
+      <span class="scene-eyebrow" style="color: var(--rose-gold);">Cotton Pink</span>
+      <h2 class="scene-title" style="color: var(--black);">Suave.<br /><em>Poderosa.</em></h2>
+      <ul class="feature-list" style="--border-color: rgba(0,0,0,0.08);">
+        <li style="border-bottom: 1px solid rgba(0,0,0,0.08); color: var(--black);"><div class="feature-dot"></div><span><strong>3 temperaturas</strong> — 160°, 180° y 200°C para cada tipo de cabello.</span></li>
+        <li style="border-bottom: 1px solid rgba(0,0,0,0.08); color: var(--black);"><div class="feature-dot"></div><span><strong>Batería de larga duración</strong> — Sin cables, sin límites.</span></li>
+        <li style="border-bottom: 1px solid rgba(0,0,0,0.08); color: var(--black);"><div class="feature-dot"></div><span><strong>Resultados radiantes</strong> — Pelo liso y brillante en minutos.</span></li>
+        <li style="color: var(--black);"><div class="feature-dot"></div><span><strong>Edición limitada</strong> — El regalo perfecto.</span></li>
+      </ul>
+      <a href="../olmist/producto.html" class="btn-rose">Ver Cotton Pink</a>
+    </div>
+    <div class="split-image">
+      <img src="../olmist/5a9bab23-b0d5-43d6-83cb-b3b934ec2a1e_processed.png" alt="Olmist Cotton Pink" />
+    </div>
+  </section>
+
+  <!-- TEMPERATURA -->
+  <section class="temp-section">
+    <div class="temp-header animate-in">
+      <span class="scene-eyebrow">Control Total</span>
+      <h2 class="scene-title" style="font-size: clamp(2.5rem, 4vw, 4rem);">3 temperaturas,<br /><em>un resultado perfecto.</em></h2>
+    </div>
+    <div class="temp-grid">
+      <div class="temp-card animate-in">
+        <div class="temp-degree">160°</div>
+        <div class="temp-level">Temperatura Baja</div>
+        <div class="temp-type">Cabello Fino</div>
+        <p class="temp-desc">Para cabellos delicados. Suavidad máxima sin comprometer el resultado.</p>
+      </div>
+      <div class="temp-card animate-in">
+        <div class="temp-degree">180°</div>
+        <div class="temp-level">Temperatura Media</div>
+        <div class="temp-type">Cabello Normal</div>
+        <p class="temp-desc">El equilibrio perfecto. Resultados brillantes y naturales para el día a día.</p>
+      </div>
+      <div class="temp-card animate-in">
+        <div class="temp-degree">200°</div>
+        <div class="temp-level">Temperatura Alta</div>
+        <div class="temp-type">Cabello Grueso</div>
+        <p class="temp-desc">Potencia máxima para dominar los cabellos más rebeldes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIFESTYLE SPLIT -->
+  <section class="split">
+    <div class="split-image">
+      <img src="../olmist/3c92958b-0e06-4308-9b52-07bcef6c125e.png" alt="Olmist lifestyle viaje" />
+    </div>
+    <div class="split-content dark animate-in">
+      <span class="scene-eyebrow">Para cada momento</span>
+      <h2 class="scene-title">Tu compañero<br />de <em>viaje</em>.</h2>
+      <p style="font-size: 0.95rem; font-weight: 300; line-height: 1.7; color: rgba(255,255,255,0.55); margin: 1.5rem 0 2.5rem; max-width: 380px;">
+        Diseñado para encajar en tu rutina sin importar dónde estés. Viajes, trabajo o el día a día — Olmist siempre está contigo.
+      </p>
+      <a href="../olmist/producto.html" class="btn-ghost">Comprar ahora</a>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="temp-header animate-in" style="color: var(--black);">
+      <span class="scene-eyebrow">Lo que dicen</span>
+      <h2 class="scene-title" style="font-size: clamp(2.5rem, 4vw, 4rem); color: var(--black);">Ellas ya lo<br /><em>eligieron.</em></h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card animate-in">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Lo llevo en el bolso a todas partes. Es increíble lo rápido que calienta y el resultado es perfecto."</p>
+        <span class="testimonial-author">— María G., Madrid</span>
+      </div>
+      <div class="testimonial-card animate-in">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Viajo mucho por trabajo y este cepillo ha cambiado mi rutina completamente. Lo recomiendo a todas."</p>
+        <span class="testimonial-author">— Laura M., Barcelona</span>
+      </div>
+      <div class="testimonial-card animate-in">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Tengo el cabello muy grueso y nunca había encontrado algo tan compacto que funcionara tan bien."</p>
+        <span class="testimonial-author">— Sofía R., Valencia</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="cta-final">
+    <div class="cta-bg"></div>
+    <div class="cta-content animate-in">
+      <span class="scene-eyebrow">Únete a Olmist</span>
+      <h2 class="scene-title">Tu mejor<br /><em>día de pelo</em><br />empieza aquí.</h2>
+      <p class="scene-sub">Sin cables. Sin compromisos. Solo resultados donde quieras, cuando quieras.</p>
+      <a href="../olmist/producto.html" class="btn-rose">Comprar Ahora</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Olmist</div>
+    <p class="footer-copy">© 2025 Olmist. Todos los derechos reservados.</p>
+    <ul class="footer-links">
+      <li><a href="#">Privacidad</a></li>
+      <li><a href="#">Devoluciones</a></li>
+      <li><a href="#">Contacto</a></li>
+    </ul>
+  </footer>
+
+  <script>
+    // Intersection Observer para animaciones al hacer scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.animate-in, #hero-content, .temp-header, .temp-card, .testimonial-card, .cta-content').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Parallax suave en el hero
+    const heroBg = document.querySelector('.scene .scene-bg');
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      if (scrolled < window.innerHeight) {
+        heroBg.style.transform = `scale(1.05) translateY(${scrolled * 0.2}px)`;
+      }
+    }, { passive: true });
+
+    // Trigger hero inmediatamente
+    setTimeout(() => {
+      document.getElementById('hero-content').classList.add('visible');
+    }, 200);
+  </script>
+
+</body>
+</html>
