@@ -472,7 +472,22 @@
     Cepillo Alisador Inalámbrico
   </div>
 
-  <div id="shopify-cart-container"></div>
+  <!-- Carrito lateral -->
+  <div id="cart-overlay" onclick="closeCart()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:999;"></div>
+  <div id="cart-drawer" style="position:fixed;top:0;right:-420px;width:420px;max-width:100vw;height:100%;background:#fafafa;z-index:1000;transition:right 0.35s ease;display:flex;flex-direction:column;box-shadow:-4px 0 24px rgba(0,0,0,0.15);">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:1.5rem 2rem;border-bottom:1px solid rgba(0,0,0,0.08);">
+      <span style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;">Tu carrito</span>
+      <button onclick="closeCart()" style="background:none;border:none;cursor:pointer;font-size:1.5rem;color:#0a0a0a;">✕</button>
+    </div>
+    <div id="cart-items" style="flex:1;overflow-y:auto;padding:1.5rem 2rem;"></div>
+    <div id="cart-footer" style="padding:1.5rem 2rem;border-top:1px solid rgba(0,0,0,0.08);display:none;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:1rem;font-size:0.95rem;">
+        <span>Subtotal</span>
+        <span id="cart-total" style="font-weight:600;"></span>
+      </div>
+      <a id="checkout-btn" href="#" target="_blank" style="display:block;background:#c8956c;color:#0a0a0a;text-align:center;padding:1rem;text-decoration:none;font-size:0.85rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:500;">Finalizar compra</a>
+    </div>
+  </div>
   <div class="product-page">
 
     <!-- GALERÍA -->
@@ -626,64 +641,118 @@
     </div>
   </div>
 
-  <script src="https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js"></script>
   <script>
     var VARIANTS = {
-      rosa: 'gid://shopify/ProductVariant/53129785573712',
-      negro: 'gid://shopify/ProductVariant/53129785606480'
+      rosa:  { id: 'gid://shopify/ProductVariant/53129785573712', name: 'Cotton Pink',  price: '89.00' },
+      negro: { id: 'gid://shopify/ProductVariant/53129785606480', name: 'Black Onyx',   price: '89.00' }
     };
-    var selectedVariant = VARIANTS.rosa;
-    var cartPromise = null;
+    var selectedColor = 'rosa';
+    var cartId = localStorage.getItem('olmist_cart_id') || null;
+    var cartLines = [];
 
-    var client = ShopifyBuy.buildClient({
-      domain: 'qtjre1-wv.myshopify.com',
-      storefrontAccessToken: '79b4147cd4b3ab43c7615e8e5a8054fe',
-    });
+    var SHOP = 'qtjre1-wv.myshopify.com';
+    var TOKEN = '79b4147cd4b3ab43c7615e8e5a8054fe';
 
-    cartPromise = ShopifyBuy.UI.onReady(client).then(function(ui) {
-      return ui.createComponent('cart', {
-        node: document.getElementById('shopify-cart-container'),
-        options: {
-          cart: {
-            text: { total: 'Subtotal', button: 'Finalizar compra' },
-            styles: {
-              button: {
-                'background-color': '#c8956c',
-                'color': '#0a0a0a',
-                ':hover': { 'background-color': '#e8b99a' },
-                'border-radius': '0',
-                'font-family': 'Inter, sans-serif',
-                'letter-spacing': '0.1em',
-                'text-transform': 'uppercase'
-              }
-            }
-          },
-          toggle: {
-            styles: {
-              toggle: { 'background-color': '#c8956c', ':hover': { 'background-color': '#e8b99a' } }
-            }
-          }
-        }
-      });
-    });
+    function gql(query, variables) {
+      return fetch('https://' + SHOP + '/api/2024-01/graphql.json', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Shopify-Storefront-Access-Token': TOKEN
+        },
+        body: JSON.stringify({ query: query, variables: variables })
+      }).then(function(r) { return r.json(); });
+    }
 
     function addToCart() {
       var qty = parseInt(document.getElementById('qtyInput').value) || 1;
       var btn = document.getElementById('btnAddToCart');
+      var variant = VARIANTS[selectedColor];
       btn.textContent = 'Añadiendo...';
       btn.disabled = true;
-      cartPromise.then(function(cart) {
-        return cart.addVariantToCart({ id: selectedVariant, quantity: qty }).then(function() {
-          cart.open();
+
+      var promise;
+      if (!cartId) {
+        promise = gql(
+          'mutation cartCreate($lines:[CartLineInput!]!){cartCreate(input:{lines:$lines}){cart{id checkoutUrl lines(first:20){edges{node{id quantity merchandise{...on ProductVariant{id title product{title}price{amount}}}}}}}}errors{field message}}}',
+          { lines: [{ merchandiseId: variant.id, quantity: qty }] }
+        ).then(function(res) {
+          var cart = res.data.cartCreate.cart;
+          cartId = cart.id;
+          localStorage.setItem('olmist_cart_id', cartId);
+          return cart;
         });
-      }).then(function() {
+      } else {
+        promise = gql(
+          'mutation cartLinesAdd($cartId:ID!,$lines:[CartLineInput!]!){cartLinesAdd(cartId:$cartId,lines:$lines){cart{id checkoutUrl lines(first:20){edges{node{id quantity merchandise{...on ProductVariant{id title product{title}price{amount}}}}}}}userErrors{field message}}}',
+          { cartId: cartId, lines: [{ merchandiseId: variant.id, quantity: qty }] }
+        ).then(function(res) {
+          var result = res.data.cartLinesAdd;
+          if (result.userErrors && result.userErrors.length) {
+            // Cart expired, create new
+            cartId = null;
+            localStorage.removeItem('olmist_cart_id');
+            return addToCart();
+          }
+          return result.cart;
+        });
+      }
+
+      promise.then(function(cart) {
         btn.textContent = 'Añadir al carrito';
         btn.disabled = false;
+        renderCart(cart);
+        openCart();
       }).catch(function() {
         btn.textContent = 'Añadir al carrito';
         btn.disabled = false;
-        window.location.href = 'https://qtjre1-wv.myshopify.com/cart/' + selectedVariant.split('/').pop() + ':' + qty;
+        var id = variant.id.split('/').pop();
+        window.location.href = 'https://' + SHOP + '/cart/' + id + ':' + qty;
       });
+    }
+
+    function renderCart(cart) {
+      var lines = cart.lines.edges;
+      var itemsEl = document.getElementById('cart-items');
+      var footerEl = document.getElementById('cart-footer');
+      var totalEl = document.getElementById('cart-total');
+      var checkoutEl = document.getElementById('checkout-btn');
+
+      if (!lines.length) {
+        itemsEl.innerHTML = '<p style="color:#6b6b6b;text-align:center;padding:2rem 0;">Tu carrito está vacío</p>';
+        footerEl.style.display = 'none';
+        return;
+      }
+
+      var total = 0;
+      itemsEl.innerHTML = lines.map(function(edge) {
+        var n = edge.node;
+        var price = parseFloat(n.merchandise.price.amount);
+        total += price * n.quantity;
+        return '<div style="display:flex;justify-content:space-between;align-items:center;padding:1rem 0;border-bottom:1px solid rgba(0,0,0,0.06);">' +
+          '<div>' +
+            '<div style="font-weight:500;font-size:0.9rem;">' + n.merchandise.product.title + '</div>' +
+            '<div style="color:#6b6b6b;font-size:0.8rem;margin-top:0.25rem;">' + n.merchandise.title + ' · ×' + n.quantity + '</div>' +
+          '</div>' +
+          '<div style="font-size:0.9rem;font-weight:500;">' + (price * n.quantity).toFixed(2) + ' €</div>' +
+        '</div>';
+      }).join('');
+
+      totalEl.textContent = total.toFixed(2) + ' €';
+      checkoutEl.href = cart.checkoutUrl;
+      footerEl.style.display = 'block';
+    }
+
+    function openCart() {
+      document.getElementById('cart-drawer').style.right = '0';
+      document.getElementById('cart-overlay').style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCart() {
+      document.getElementById('cart-drawer').style.right = '-420px';
+      document.getElementById('cart-overlay').style.display = 'none';
+      document.body.style.overflow = '';
     }
 
     function changeImage(thumb, src) {
@@ -696,7 +765,7 @@
       document.querySelectorAll('.color-option').forEach(c => c.classList.remove('active'));
       el.classList.add('active');
       document.getElementById('colorLabel').textContent = label;
-      selectedVariant = VARIANTS[el.dataset.color];
+      selectedColor = el.dataset.color;
       if (el.dataset.color === 'rosa') {
         changeImage(document.querySelector('.thumb'), '5a9bab23-b0d5-43d6-83cb-b3b934ec2a1e_processed.png');
       } else {
