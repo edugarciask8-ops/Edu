@@ -840,13 +840,19 @@
       document.getElementById('caption3'),
     ];
 
-    // Precargar todos los frames
-    const frameImages = [];
-    for (let i = 1; i <= TOTAL_FRAMES; i++) {
-      const img = new Image();
-      img.src = `frames/frame_${String(i).padStart(3, '0')}.jpg`;
-      frameImages.push(img);
+    // Precargar todos los frames (frame_120 no existe, va del 119 al 121)
+    const frameFiles = [];
+    for (let i = 1; i <= 121; i++) {
+      if (i === 120) continue;
+      frameFiles.push(`frames/frame_${String(i).padStart(3, '0')}.jpg`);
     }
+    const TOTAL_FRAMES = frameFiles.length;
+    const frameImages = [];
+    frameFiles.forEach(src => {
+      const img = new Image();
+      img.src = src;
+      frameImages.push(img);
+    });
 
     function onScroll() {
       const rect = videoStory.getBoundingClientRect();
