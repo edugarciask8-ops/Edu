@@ -525,59 +525,6 @@
 
     .footer-links a:hover { color: var(--rose-gold); }
 
-    /* SCROLL VIDEO STORYTELLING */
-    .video-story {
-      height: 400vh;
-      position: relative;
-    }
-
-    .video-sticky {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      overflow: hidden;
-      background: var(--black);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .video-sticky img#storyFrame {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.85;
-    }
-
-    .video-caption .scene-eyebrow { color: var(--white); }
-
-    .video-caption {
-      position: absolute;
-      bottom: 12%;
-      left: 6%;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-      pointer-events: none;
-    }
-
-    .video-caption.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .video-caption h2 {
-      font-family: var(--serif);
-      font-size: clamp(2.5rem, 5vw, 5rem);
-      font-weight: 500;
-      line-height: 1.1;
-      color: var(--white);
-    }
-
-    .video-caption h2 em {
-      font-style: italic;
-      color: var(--white);
-    }
 
     /* RESPONSIVE */
     @media (max-width: 1024px) {
@@ -664,24 +611,6 @@
     </div>
   </section>
 
-  <!-- SCROLL VIDEO STORYTELLING -->
-  <section class="video-story">
-    <div class="video-sticky">
-      <img id="storyFrame" src="frames/frame_001.jpg" alt="" />
-      <div class="video-caption" id="caption1">
-        <span class="scene-eyebrow">Diseño</span>
-        <h2>Precisión<br /><em>artesanal.</em></h2>
-      </div>
-      <div class="video-caption" id="caption2">
-        <span class="scene-eyebrow">Tecnología</span>
-        <h2>Calor en<br /><em>30 segundos.</em></h2>
-      </div>
-      <div class="video-caption" id="caption3">
-        <span class="scene-eyebrow">Libertad</span>
-        <h2>Sin cables.<br /><em>Sin límites.</em></h2>
-      </div>
-    </div>
-  </section>
 
   <!-- STATS -->
   <div class="stats-bar">
@@ -830,55 +759,6 @@
   </footer>
 
   <script>
-    // Scroll frame storytelling — Apple-style frame scrubbing
-    const TOTAL_FRAMES = 120;
-    const storyFrame = document.getElementById('storyFrame');
-    const videoStory = document.querySelector('.video-story');
-    const captions = [
-      document.getElementById('caption1'),
-      document.getElementById('caption2'),
-      document.getElementById('caption3'),
-    ];
-
-    // Precargar todos los frames (frame_120 no existe, va del 119 al 121)
-    const frameFiles = [];
-    for (let i = 1; i <= 121; i++) {
-      if (i === 120) continue;
-      frameFiles.push(`frames/frame_${String(i).padStart(3, '0')}.jpg`);
-    }
-    const TOTAL_FRAMES = frameFiles.length;
-    const frameImages = [];
-    frameFiles.forEach(src => {
-      const img = new Image();
-      img.src = src;
-      frameImages.push(img);
-    });
-
-    function onScroll() {
-      const rect = videoStory.getBoundingClientRect();
-      const sectionHeight = videoStory.offsetHeight - window.innerHeight;
-      const scrolled = -rect.top;
-      if (scrolled < 0) return;
-      if (scrolled > sectionHeight) {
-        storyFrame.src = frameImages[TOTAL_FRAMES - 1].src;
-        captions.forEach(c => c.classList.remove('active'));
-        captions[2].classList.add('active');
-        return;
-      }
-
-      const progress = scrolled / sectionHeight;
-      const frameIndex = Math.min(Math.floor(progress * TOTAL_FRAMES), TOTAL_FRAMES - 1);
-      const frame = frameImages[frameIndex];
-      if (frame && frame.complete) storyFrame.src = frame.src;
-
-      captions.forEach(c => c.classList.remove('active'));
-      if (progress < 0.33) captions[0].classList.add('active');
-      else if (progress < 0.66) captions[1].classList.add('active');
-      else captions[2].classList.add('active');
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
 
     // Intersection Observer para animaciones al hacer scroll
     const observer = new IntersectionObserver((entries) => {
