@@ -549,6 +549,8 @@
       opacity: 0.85;
     }
 
+    .video-caption .scene-eyebrow { color: var(--white); }
+
     .video-caption {
       position: absolute;
       bottom: 12%;
@@ -850,7 +852,13 @@
       const rect = videoStory.getBoundingClientRect();
       const sectionHeight = videoStory.offsetHeight - window.innerHeight;
       const scrolled = -rect.top;
-      if (scrolled < 0 || scrolled > sectionHeight) return;
+      if (scrolled < 0) return;
+      if (scrolled > sectionHeight) {
+        storyFrame.src = frameImages[TOTAL_FRAMES - 1].src;
+        captions.forEach(c => c.classList.remove('active'));
+        captions[2].classList.add('active');
+        return;
+      }
 
       const progress = scrolled / sectionHeight;
       const frameIndex = Math.min(Math.floor(progress * TOTAL_FRAMES), TOTAL_FRAMES - 1);
