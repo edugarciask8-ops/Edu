@@ -540,42 +540,6 @@
       footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem; }
     }
 
-    /* REVEAL MASK CURSOR */
-    #hero-title {
-      position: relative;
-      cursor: default;
-      --mx: -999px;
-      --my: -999px;
-    }
-
-    /* Capa base: texto blanco */
-    #hero-title .text-base {
-      display: block;
-      color: var(--white);
-    }
-
-    /* Capa rosa: encima, con clip-path circular que sigue el cursor */
-    #hero-title .text-reveal {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, #fce4e4 0%, #ffb3b3 50%, #ffcab3 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      -webkit-mask-image: radial-gradient(circle 130px at var(--mx) var(--my), black 0%, black 40%, transparent 70%);
-      mask-image: radial-gradient(circle 130px at var(--mx) var(--my), black 0%, black 40%, transparent 70%);
-      pointer-events: none;
-      font-family: var(--serif);
-      font-size: clamp(3.5rem, 8vw, 8rem);
-      font-weight: 500;
-      line-height: 1.0;
-      white-space: pre;
-    }
-
-    #hero-title .text-reveal em {
-      font-style: italic;
-    }
-
     @media (prefers-reduced-motion: reduce) {
       .scene-content, .temp-header, .temp-card, .testimonial-card, .cta-content {
         opacity: 1 !important;
@@ -599,8 +563,7 @@
     <div class="scene-content" id="hero-content">
       <span class="scene-eyebrow">Nueva Colección Inalámbrica</span>
       <h1 class="scene-title" id="hero-title">
-        <span class="text-base">Estilo sin<br /><em>límites</em>,<br />sin cables.</span>
-        <span class="text-reveal" aria-hidden="true">Estilo sin<br /><em>límites</em>,<br />sin cables.</span>
+        Estilo sin<br /><em>límites</em>,<br />sin cables.
       </h1>
       <p class="scene-sub">Tecnología de calentamiento profesional. Listo en 30 segundos, perfecto en cualquier lugar.</p>
       <a href="producto.html" class="btn-ghost">Descubrir ahora</a>
@@ -782,22 +745,6 @@
       }
     }, { passive: true });
 
-    // Reveal mask cursor — solo afecta al texto
-    const heroTitle = document.getElementById('hero-title');
-    const textReveal = heroTitle.querySelector('.text-reveal');
-
-    heroTitle.addEventListener('mousemove', (e) => {
-      const rect = heroTitle.getBoundingClientRect();
-      const x = (e.clientX - rect.left) + 'px';
-      const y = (e.clientY - rect.top) + 'px';
-      textReveal.style.setProperty('--mx', x);
-      textReveal.style.setProperty('--my', y);
-    });
-
-    heroTitle.addEventListener('mouseleave', () => {
-      textReveal.style.setProperty('--mx', '-999px');
-      textReveal.style.setProperty('--my', '-999px');
-    });
 
     // Trigger hero inmediatamente
     setTimeout(() => {
