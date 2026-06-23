@@ -2,13 +2,9 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="0; url=olmist-v2/" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Olmist — Estilo Inalámbrico, Libertad Total</title>
-  <meta name="description" content="Descubre la colección de planchas y cepillos alisadores inalámbricos de Olmist. Diseño premium, calentamiento rápido y libertad total." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <title>Olmist — Estilo Inalámbrico</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -17,10 +13,6 @@
       --white: #fafafa;
       --rose-gold: #c8956c;
       --rose-gold-light: #e8b99a;
-      --blush: #f5e6e0;
-      --blush-deep: #e8c9bf;
-      --grey: #6b6b6b;
-      --grey-light: #f0eeec;
       --serif: 'Playfair Display', Georgia, serif;
       --sans: 'Inter', system-ui, sans-serif;
     }
@@ -29,8 +21,8 @@
 
     body {
       font-family: var(--sans);
-      background: var(--white);
-      color: var(--black);
+      background: var(--black);
+      color: var(--white);
       overflow-x: hidden;
     }
 
@@ -42,191 +34,205 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.25rem 3rem;
-      background: rgba(250,250,250,0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(0,0,0,0.06);
+      padding: 1.5rem 3rem;
+      mix-blend-mode: difference;
     }
 
     .nav-logo {
       font-family: var(--serif);
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       font-weight: 700;
+      color: var(--white);
+      text-decoration: none;
       letter-spacing: 0.04em;
-      color: var(--black);
-      text-decoration: none;
     }
-
-    .nav-links {
-      display: flex;
-      gap: 2.5rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-size: 0.82rem;
-      font-weight: 400;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--black);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover { color: var(--rose-gold); }
 
     .nav-cta {
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       font-weight: 500;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--white);
-      background: var(--black);
-      padding: 0.65rem 1.5rem;
       text-decoration: none;
-      transition: background 0.2s;
+      border-bottom: 1px solid rgba(255,255,255,0.4);
+      padding-bottom: 2px;
+      transition: border-color 0.2s;
     }
 
-    .nav-cta:hover { background: var(--rose-gold); }
+    .nav-cta:hover { border-color: var(--white); }
 
-    /* HERO */
-    .hero {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      padding-top: 80px;
-    }
-
-    .hero-content {
+    /* SECCIÓN HERO */
+    .scene {
+      position: relative;
+      height: 100vh;
       display: flex;
-      flex-direction: column;
+      align-items: center;
       justify-content: center;
-      padding: 5rem 4rem 5rem 5rem;
+      overflow: hidden;
     }
 
-    .hero-eyebrow {
-      font-size: 0.72rem;
+    .scene-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.05);
+      transition: transform 0.1s linear;
+    }
+
+    .scene-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(10,10,10,0.75);
+    }
+
+    .scene-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 2rem;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    .scene-content.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .scene-eyebrow {
+      font-size: 0.7rem;
       font-weight: 500;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
       color: var(--rose-gold);
       margin-bottom: 1.5rem;
+      display: block;
     }
 
-    .hero-title {
+    .scene-title {
       font-family: var(--serif);
-      font-size: clamp(2.8rem, 4.5vw, 4.2rem);
+      font-size: clamp(3.5rem, 8vw, 8rem);
       font-weight: 500;
-      line-height: 1.1;
-      margin-bottom: 1.5rem;
-      color: var(--black);
+      line-height: 1.0;
+      color: var(--white);
+      margin-bottom: 2rem;
     }
 
-    .hero-title em {
+    .scene-title em {
       font-style: italic;
       color: var(--rose-gold);
     }
 
-    .hero-subtitle {
+    .scene-sub {
       font-size: 1rem;
       font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
       line-height: 1.7;
-      color: var(--grey);
-      max-width: 420px;
-      margin-bottom: 2.5rem;
     }
 
-    .hero-actions {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-    }
-
-    .btn-primary {
-      font-size: 0.8rem;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--white);
-      background: var(--black);
-      padding: 1rem 2.2rem;
-      text-decoration: none;
-      transition: all 0.25s;
+    .btn-ghost {
       display: inline-block;
-    }
-
-    .btn-primary:hover {
-      background: var(--rose-gold);
-      transform: translateY(-1px);
-    }
-
-    .btn-secondary {
-      font-size: 0.8rem;
-      font-weight: 400;
-      letter-spacing: 0.1em;
-      color: var(--black);
-      text-decoration: none;
-      border-bottom: 1px solid var(--black);
-      padding-bottom: 2px;
-      transition: color 0.2s, border-color 0.2s;
-    }
-
-    .btn-secondary:hover {
-      color: var(--rose-gold);
-      border-color: var(--rose-gold);
-    }
-
-    .hero-image {
-      position: relative;
-      overflow: hidden;
-      background: var(--black);
-    }
-
-    .hero-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.9;
-    }
-
-    .hero-badge {
-      position: absolute;
-      bottom: 2.5rem;
-      left: 2.5rem;
-      background: rgba(250,250,250,0.1);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(200,149,108,0.4);
-      padding: 1rem 1.5rem;
-      color: var(--white);
-    }
-
-    .hero-badge span {
-      display: block;
-      font-size: 0.65rem;
+      font-size: 0.78rem;
+      font-weight: 500;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: var(--rose-gold-light);
-      margin-bottom: 0.3rem;
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.5);
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      transition: all 0.3s;
+      cursor: pointer;
     }
 
-    .hero-badge strong {
-      font-family: var(--serif);
-      font-size: 1.1rem;
+    .btn-ghost:hover {
+      background: var(--white);
+      color: var(--black);
+      border-color: var(--white);
+    }
+
+    .btn-rose {
+      display: inline-block;
+      font-size: 0.78rem;
       font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--rose-gold);
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      transition: all 0.3s;
+      cursor: pointer;
     }
 
-    /* STATS */
-    .stats {
-      background: var(--black);
+    .btn-rose:hover { background: var(--rose-gold-light); }
+
+    /* SCROLL INDICATOR */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0.5;
+    }
+
+    .scroll-hint span {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--white), transparent);
+      animation: scrollLine 1.5s ease-in-out infinite;
+    }
+
+    @keyframes scrollLine {
+      0% { transform: scaleY(0); transform-origin: top; }
+      50% { transform: scaleY(1); transform-origin: top; }
+      51% { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* SECCIÓN STICKY — TEXTO LATERAL */
+    .sticky-section {
+      position: relative;
+    }
+
+    .sticky-track {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .sticky-track .scene-bg {
+      height: 100%;
+    }
+
+    /* STATS EN LÍNEA */
+    .stats-bar {
+      background: var(--white);
+      color: var(--black);
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      padding: 3rem 5rem;
-      gap: 2rem;
+      padding: 2.5rem 5rem;
+      gap: 1rem;
     }
 
     .stat {
       text-align: center;
-      color: var(--white);
     }
 
     .stat-number {
@@ -238,161 +244,63 @@
     }
 
     .stat-label {
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.5);
-      margin-top: 0.4rem;
+      color: rgba(0,0,0,0.45);
+      margin-top: 0.3rem;
       display: block;
     }
 
-    /* SECTION HEADERS */
-    .section-header {
-      text-align: center;
-      max-width: 600px;
-      margin: 0 auto 4rem;
-    }
-
-    .section-eyebrow {
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--rose-gold);
-      margin-bottom: 1rem;
-      display: block;
-    }
-
-    .section-title {
-      font-family: var(--serif);
-      font-size: clamp(2rem, 3vw, 2.8rem);
-      font-weight: 500;
-      line-height: 1.15;
-      color: var(--black);
-    }
-
-    .section-title em { font-style: italic; color: var(--rose-gold); }
-
-    /* PRODUCTS */
-    .products {
-      padding: 7rem 5rem;
-      background: var(--white);
-    }
-
-    .products-grid {
+    /* SECCIÓN FEATURE — HORIZONTAL SPLIT */
+    .split {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
     }
 
-    .product-card {
-      cursor: pointer;
-      transition: transform 0.3s;
-    }
-
-    .product-card:hover { transform: translateY(-6px); }
-
-    .product-card-image {
-      aspect-ratio: 4/3;
+    .split-image {
       overflow: hidden;
-      margin-bottom: 1.5rem;
       position: relative;
     }
 
-    .product-card-image img {
+    .split-image img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.5s;
+      transition: transform 0.8s ease;
     }
 
-    .product-card:hover .product-card-image img { transform: scale(1.04); }
+    .split:hover .split-image img { transform: scale(1.03); }
 
-    .product-card-tag {
-      position: absolute;
-      top: 1rem;
-      left: 1rem;
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      background: var(--rose-gold);
-      color: var(--white);
-      padding: 0.3rem 0.7rem;
-    }
-
-    .product-card-name {
-      font-family: var(--serif);
-      font-size: 1.3rem;
-      font-weight: 500;
-      margin-bottom: 0.5rem;
-      color: var(--black);
-    }
-
-    .product-card-desc {
-      font-size: 0.85rem;
-      font-weight: 300;
-      line-height: 1.6;
-      color: var(--grey);
-      margin-bottom: 1.2rem;
-    }
-
-    .product-card-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .product-card-price {
-      font-family: var(--serif);
-      font-size: 1.4rem;
-      color: var(--black);
-    }
-
-    .product-card-btn {
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--black);
-      text-decoration: none;
-      border-bottom: 1px solid var(--black);
-      padding-bottom: 2px;
-      transition: color 0.2s, border-color 0.2s;
-    }
-
-    .product-card-btn:hover {
-      color: var(--rose-gold);
-      border-color: var(--rose-gold);
-    }
-
-    /* FEATURE SECTION */
-    .feature {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      min-height: 70vh;
-    }
-
-    .feature-image {
-      overflow: hidden;
-    }
-
-    .feature-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .feature-content {
+    .split-content {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 5rem;
-      background: var(--blush);
+      padding: 6rem 5rem;
     }
+
+    .split-content.dark {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .split-content.light {
+      background: var(--white);
+      color: var(--black);
+    }
+
+    .split-content .scene-title {
+      font-size: clamp(2.5rem, 4vw, 4.5rem);
+      text-align: left;
+      margin-bottom: 1.5rem;
+    }
+
+    .split-content.light .scene-title { color: var(--black); }
 
     .feature-list {
       list-style: none;
-      margin: 2rem 0 2.5rem;
+      margin: 2rem 0 3rem;
     }
 
     .feature-list li {
@@ -400,64 +308,65 @@
       align-items: flex-start;
       gap: 1rem;
       padding: 1rem 0;
-      border-bottom: 1px solid var(--blush-deep);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
       font-size: 0.9rem;
       font-weight: 300;
       line-height: 1.5;
-      color: var(--black);
     }
 
-    .feature-list li:last-child { border-bottom: none; }
+    .split-content.light .feature-list li {
+      border-bottom-color: rgba(0,0,0,0.08);
+    }
 
-    .feature-list-icon {
-      width: 18px;
-      height: 18px;
+    .feature-dot {
+      width: 6px;
+      height: 6px;
       background: var(--rose-gold);
       border-radius: 50%;
       flex-shrink: 0;
-      margin-top: 2px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      margin-top: 7px;
     }
 
-    .feature-list-icon::after {
-      content: '';
-      width: 6px;
-      height: 4px;
-      border-left: 1.5px solid white;
-      border-bottom: 1.5px solid white;
-      transform: rotate(-45deg) translateY(-1px);
-    }
-
-    /* TEMP SECTION */
+    /* TEMPERATURA */
     .temp-section {
-      padding: 7rem 5rem;
       background: var(--black);
-      color: var(--white);
+      padding: 8rem 5rem;
     }
 
-    .temp-section .section-title { color: var(--white); }
+    .temp-header {
+      text-align: center;
+      margin-bottom: 5rem;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .temp-header.visible { opacity: 1; transform: translateY(0); }
 
     .temp-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1px;
-      background: rgba(255,255,255,0.1);
-      margin-top: 4rem;
+      background: rgba(255,255,255,0.06);
     }
 
     .temp-card {
       background: var(--black);
-      padding: 3rem 2.5rem;
-      transition: background 0.3s;
+      padding: 3.5rem 3rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s;
     }
 
+    .temp-card:nth-child(2) { transition-delay: 0.1s; }
+    .temp-card:nth-child(3) { transition-delay: 0.2s; }
+
+    .temp-card.visible { opacity: 1; transform: translateY(0); }
     .temp-card:hover { background: #111; }
 
     .temp-degree {
       font-family: var(--serif);
-      font-size: 3.5rem;
+      font-size: 4rem;
       font-weight: 400;
       color: var(--rose-gold);
       line-height: 1;
@@ -465,95 +374,36 @@
     }
 
     .temp-level {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.3);
       margin-bottom: 1.5rem;
     }
 
     .temp-type {
       font-family: var(--serif);
-      font-size: 1.1rem;
-      font-weight: 500;
+      font-size: 1.2rem;
       color: var(--white);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
     }
 
     .temp-desc {
       font-size: 0.83rem;
       font-weight: 300;
       line-height: 1.6;
-      color: rgba(255,255,255,0.5);
-    }
-
-    /* LIFESTYLE */
-    .lifestyle {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      min-height: 70vh;
-    }
-
-    .lifestyle-content {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 5rem;
-      background: var(--grey-light);
-    }
-
-    .lifestyle-image {
-      overflow: hidden;
-    }
-
-    .lifestyle-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* SPECS */
-    .specs {
-      padding: 7rem 5rem;
-      background: var(--white);
-    }
-
-    .specs-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1px;
-      background: rgba(0,0,0,0.08);
-      max-width: 800px;
-      margin: 4rem auto 0;
-    }
-
-    .spec-item {
-      background: var(--white);
-      padding: 1.5rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .spec-label {
-      font-size: 0.78rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--grey);
-    }
-
-    .spec-value {
-      font-family: var(--serif);
-      font-size: 1rem;
-      font-weight: 500;
-      color: var(--black);
+      color: rgba(255,255,255,0.4);
     }
 
     /* TESTIMONIALS */
     .testimonials {
-      padding: 7rem 5rem;
-      background: var(--blush);
+      background: var(--white);
+      color: var(--black);
+      padding: 8rem 5rem;
     }
+
+    .testimonials .temp-header { color: var(--black); }
+    .testimonials .scene-eyebrow { color: var(--rose-gold); }
 
     .testimonials-grid {
       display: grid;
@@ -563,93 +413,83 @@
     }
 
     .testimonial-card {
-      background: var(--white);
       padding: 2.5rem;
+      border: 1px solid rgba(0,0,0,0.08);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
     }
+
+    .testimonial-card:nth-child(2) { transition-delay: 0.1s; }
+    .testimonial-card:nth-child(3) { transition-delay: 0.2s; }
+    .testimonial-card.visible { opacity: 1; transform: translateY(0); }
 
     .testimonial-stars {
       color: var(--rose-gold);
-      font-size: 0.9rem;
       letter-spacing: 0.1em;
       margin-bottom: 1.2rem;
+      font-size: 0.85rem;
     }
 
     .testimonial-text {
       font-family: var(--serif);
       font-size: 1rem;
       font-style: italic;
-      line-height: 1.6;
+      line-height: 1.65;
       color: var(--black);
       margin-bottom: 1.5rem;
     }
 
     .testimonial-author {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--grey);
+      color: rgba(0,0,0,0.4);
     }
 
     /* CTA FINAL */
     .cta-final {
-      background: var(--black);
-      padding: 8rem 5rem;
-      text-align: center;
       position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
       overflow: hidden;
     }
 
-    .cta-final::before {
-      content: 'Olmist';
-      font-family: var(--serif);
-      font-size: 18vw;
-      font-weight: 700;
-      color: rgba(255,255,255,0.025);
+    .cta-bg {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      white-space: nowrap;
-      pointer-events: none;
+      inset: 0;
+      background-image: url('../7d504e39-af12-4d3b-a75c-30a0aac4ef61_processed.png');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.25);
     }
 
-    .cta-final .section-title { color: var(--white); position: relative; }
-    .cta-final .section-eyebrow { position: relative; }
-
-    .cta-subtitle {
-      font-size: 1rem;
-      font-weight: 300;
-      color: rgba(255,255,255,0.5);
-      margin: 1.5rem auto 3rem;
-      max-width: 480px;
-      line-height: 1.7;
+    .cta-content {
       position: relative;
+      z-index: 2;
+      padding: 0 2rem;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
     }
 
-    .btn-primary-rose {
-      font-size: 0.8rem;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--black);
-      background: var(--rose-gold);
-      padding: 1.1rem 2.8rem;
-      text-decoration: none;
-      transition: all 0.25s;
-      display: inline-block;
-      position: relative;
+    .cta-content.visible { opacity: 1; transform: translateY(0); }
+
+    .cta-final .scene-title {
+      font-size: clamp(3rem, 6vw, 6rem);
+      margin-bottom: 1.5rem;
     }
 
-    .btn-primary-rose:hover {
-      background: var(--rose-gold-light);
-      transform: translateY(-2px);
-    }
+    .cta-final .scene-sub { margin-bottom: 3rem; }
 
     /* FOOTER */
     footer {
       background: var(--black);
       border-top: 1px solid rgba(255,255,255,0.06);
-      padding: 3rem 5rem;
+      padding: 2.5rem 5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -657,14 +497,14 @@
 
     .footer-logo {
       font-family: var(--serif);
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       font-weight: 700;
       color: var(--white);
     }
 
     .footer-copy {
-      font-size: 0.72rem;
-      color: rgba(255,255,255,0.3);
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.25);
       letter-spacing: 0.08em;
     }
 
@@ -675,96 +515,78 @@
     }
 
     .footer-links a {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.3);
       text-decoration: none;
       transition: color 0.2s;
     }
 
     .footer-links a:hover { color: var(--rose-gold); }
 
+
     /* RESPONSIVE */
     @media (max-width: 1024px) {
-      nav { padding: 1.2rem 2rem; }
-      .nav-links { display: none; }
-      .hero { grid-template-columns: 1fr; }
-      .hero-content { padding: 4rem 2.5rem; }
-      .hero-image { min-height: 50vh; }
-      .stats { grid-template-columns: repeat(2, 1fr); padding: 3rem 2.5rem; }
-      .products { padding: 5rem 2.5rem; }
-      .products-grid { grid-template-columns: 1fr; gap: 3rem; }
-      .feature { grid-template-columns: 1fr; }
-      .feature-image { min-height: 50vh; }
-      .feature-content { padding: 3.5rem 2.5rem; }
-      .temp-section { padding: 5rem 2.5rem; }
+      nav { padding: 1.2rem 1.5rem; }
+      .stats-bar { grid-template-columns: repeat(2, 1fr); padding: 2.5rem 2rem; }
+      .split { grid-template-columns: 1fr; }
+      .split-image { min-height: 60vw; }
+      .split-content { padding: 4rem 2rem; }
+      .temp-section { padding: 5rem 2rem; }
       .temp-grid { grid-template-columns: 1fr; }
-      .lifestyle { grid-template-columns: 1fr; }
-      .lifestyle-content { padding: 3.5rem 2.5rem; }
-      .lifestyle-image { min-height: 50vh; }
-      .specs { padding: 5rem 2.5rem; }
-      .specs-grid { grid-template-columns: 1fr; }
-      .testimonials { padding: 5rem 2.5rem; }
+      .testimonials { padding: 5rem 2rem; }
       .testimonials-grid { grid-template-columns: 1fr; }
-      .cta-final { padding: 6rem 2.5rem; }
-      footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2.5rem; }
-      .footer-links { flex-wrap: wrap; justify-content: center; }
+      footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .scene-content, .temp-header, .temp-card, .testimonial-card, .cta-content {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
   <nav>
     <a href="#" class="nav-logo">Olmist</a>
-    <ul class="nav-links">
-      <li><a href="#productos">Productos</a></li>
-      <li><a href="#caracteristicas">Características</a></li>
-      <li><a href="#opiniones">Opiniones</a></li>
-    </ul>
-    <a href="producto.html" class="nav-cta">Comprar Ahora</a>
+    <a href="olmist-v2/producto.html" class="nav-cta">Comprar</a>
   </nav>
 
   <!-- HERO -->
-  <section class="hero">
-    <div class="hero-content">
-      <p class="hero-eyebrow">Nueva Colección — Inalámbrica</p>
-      <h1 class="hero-title">
-        Estilo sin<br />
-        <em>límites</em>,<br />
-        sin cables.
+  <section class="scene">
+    <div class="scene-bg" style="background-image: url('../7d504e39-af12-4d3b-a75c-30a0aac4ef61_processed.png'); filter: brightness(0.35);"></div>
+    <div class="scene-content" id="hero-content">
+      <span class="scene-eyebrow">Nueva Colección Inalámbrica</span>
+      <h1 class="scene-title" id="hero-title">
+        Estilo sin<br /><em>límites</em>,<br />sin cables.
       </h1>
-      <p class="hero-subtitle">
-        Tecnología de calentamiento profesional en la palma de tu mano. Listo en 30 segundos, perfecto en cualquier lugar.
-      </p>
-      <div class="hero-actions">
-        <a href="producto.html" class="btn-primary">Comprar Ahora</a>
-        <a href="#productos" class="btn-secondary">Ver colección</a>
-      </div>
+      <p class="scene-sub">Tecnología de calentamiento profesional. Listo en 30 segundos, perfecto en cualquier lugar.</p>
+      <a href="olmist-v2/producto.html" class="btn-ghost">Descubrir ahora</a>
     </div>
-    <div class="hero-image">
-      <img src="7d504e39-af12-4d3b-a75c-30a0aac4ef61_processed.png" alt="Olmist Mini Plancha Inalámbrica en negro mate" />
-      <div class="hero-badge">
-        <span>Disponible en</span>
-        <strong>Negro & Rosa Blush</strong>
-      </div>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
     </div>
   </section>
 
+
   <!-- STATS -->
-  <div class="stats">
+  <div class="stats-bar">
     <div class="stat">
       <span class="stat-number">30s</span>
-      <span class="stat-label">Calentamiento rápido</span>
+      <span class="stat-label">Calentamiento</span>
     </div>
     <div class="stat">
       <span class="stat-number">200°C</span>
-      <span class="stat-label">Temperatura máxima</span>
+      <span class="stat-label">Temperatura máx.</span>
     </div>
     <div class="stat">
       <span class="stat-number">3</span>
-      <span class="stat-label">Niveles de temperatura</span>
+      <span class="stat-label">Niveles de calor</span>
     </div>
     <div class="stat">
       <span class="stat-number">100%</span>
@@ -772,201 +594,119 @@
     </div>
   </div>
 
-  <!-- PRODUCTS -->
-  <section class="products" id="productos">
-    <div class="section-header">
-      <span class="section-eyebrow">Nuestra Colección</span>
-      <h2 class="section-title">Diseñado para <em>ti</em></h2>
+  <!-- SPLIT 1 — BLACK ONYX -->
+  <section class="split">
+    <div class="split-image">
+      <img src="./7d504e39-af12-4d3b-a75c-30a0aac4ef61_processed.png" alt="Olmist Black Onyx" />
     </div>
-    <div class="products-grid">
-      <div class="product-card">
-        <div class="product-card-image">
-          <img src="7d504e39-af12-4d3b-a75c-30a0aac4ef61_processed.png" alt="Mini Plancha Inalámbrica Olmist" />
-          <span class="product-card-tag">Más Vendido</span>
-        </div>
-        <h3 class="product-card-name">Mini Plancha Inalámbrica</h3>
-        <p class="product-card-desc">Alisa tu cabello en cualquier momento y lugar. Ligera, compacta y siempre lista para usar.</p>
-        <div class="product-card-footer">
-          <span class="product-card-price">—</span>
-          <a href="producto.html" class="product-card-btn">Ver producto →</a>
-        </div>
-      </div>
-      <div class="product-card">
-        <div class="product-card-image">
-          <img src="5a9bab23-b0d5-43d6-83cb-b3b934ec2a1e_processed.png" alt="Cepillo Alisador Inalámbrico Olmist" />
-          <span class="product-card-tag">Nuevo</span>
-        </div>
-        <h3 class="product-card-name">Cepillo Alisador Inalámbrico</h3>
-        <p class="product-card-desc">Control de temperatura de 3 niveles. Resultados naturales y radiantes para todo tipo de cabello.</p>
-        <div class="product-card-footer">
-          <span class="product-card-price">—</span>
-          <a href="producto.html" class="product-card-btn">Ver producto →</a>
-        </div>
-      </div>
-      <div class="product-card">
-        <div class="product-card-image">
-          <img src="3c92958b-0e06-4308-9b52-07bcef6c125e.png" alt="Minicepillo Alisador Olmist" />
-        </div>
-        <h3 class="product-card-name">Minicepillo Alisador</h3>
-        <p class="product-card-desc">Cabello suave y sedoso o rizos definidos en solo 30 segundos. El regalo perfecto para cualquier ocasión.</p>
-        <div class="product-card-footer">
-          <span class="product-card-price">—</span>
-          <a href="producto.html" class="product-card-btn">Ver producto →</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FEATURE -->
-  <section class="feature" id="caracteristicas">
-    <div class="feature-image">
-      <img src="5a9bab23-b0d5-43d6-83cb-b3b934ec2a1e_processed.png" alt="Olmist Cepillo Alisador Rosa" />
-    </div>
-    <div class="feature-content">
-      <span class="section-eyebrow">Por qué Olmist</span>
-      <h2 class="section-title">Profesional.<br /><em>Portátil.</em><br />Perfecto.</h2>
+    <div class="split-content dark animate-in">
+      <span class="scene-eyebrow">Black Onyx</span>
+      <h2 class="scene-title">Poder<br /><em>oscuro</em>.</h2>
       <ul class="feature-list">
-        <li>
-          <div class="feature-list-icon"></div>
-          <span><strong>Inalámbrico 100%</strong> — Sin cables, sin límites. Úsalo en casa, en el trabajo o en el aeropuerto.</span>
-        </li>
-        <li>
-          <div class="feature-list-icon"></div>
-          <span><strong>Calentamiento en 30 segundos</strong> — Listo cuando tú lo necesitas, no cuando el dispositivo quiere.</span>
-        </li>
-        <li>
-          <div class="feature-list-icon"></div>
-          <span><strong>Protección Anti-Quemaduras</strong> — Tecnología que protege tanto tu cabello como tu piel del sobrecalentamiento.</span>
-        </li>
-        <li>
-          <div class="feature-list-icon"></div>
-          <span><strong>Materiales resistentes al calor</strong> — Diseñado para proteger tus manos durante cada uso.</span>
-        </li>
-        <li>
-          <div class="feature-list-icon"></div>
-          <span><strong>Compacto y ligero</strong> — Cabe en cualquier bolso. Tu aliado de viaje indispensable.</span>
-        </li>
+        <li><div class="feature-dot"></div><span><strong>Calentamiento en 30 segundos</strong> — Listo cuando tú lo necesitas.</span></li>
+        <li><div class="feature-dot"></div><span><strong>200°C de potencia</strong> — Para los cabellos más rebeldes.</span></li>
+        <li><div class="feature-dot"></div><span><strong>Protección anti-quemaduras</strong> — Tecnología que cuida tu cabello.</span></li>
+        <li><div class="feature-dot"></div><span><strong>Diseño compacto</strong> — Cabe en cualquier bolso.</span></li>
       </ul>
-      <a href="producto.html" class="btn-primary">Quiero el mío</a>
+      <a href="olmist-v2/producto.html" class="btn-ghost">Ver Black Onyx</a>
     </div>
   </section>
 
-  <!-- TEMPERATURE -->
+  <!-- SPLIT 2 — COTTON PINK -->
+  <section class="split">
+    <div class="split-content light animate-in">
+      <span class="scene-eyebrow" style="color: var(--rose-gold);">Cotton Pink</span>
+      <h2 class="scene-title" style="color: var(--black);">Suave.<br /><em>Poderosa.</em></h2>
+      <ul class="feature-list" style="--border-color: rgba(0,0,0,0.08);">
+        <li style="border-bottom: 1px solid rgba(0,0,0,0.08); color: var(--black);"><div class="feature-dot"></div><span><strong>3 temperaturas</strong> — 160°, 180° y 200°C para cada tipo de cabello.</span></li>
+        <li style="border-bottom: 1px solid rgba(0,0,0,0.08); color: var(--black);"><div class="feature-dot"></div><span><strong>Batería de larga duración</strong> — Sin cables, sin límites.</span></li>
+        <li style="border-bottom: 1px solid rgba(0,0,0,0.08); color: var(--black);"><div class="feature-dot"></div><span><strong>Resultados radiantes</strong> — Pelo liso y brillante en minutos.</span></li>
+        <li style="color: var(--black);"><div class="feature-dot"></div><span><strong>Edición limitada</strong> — El regalo perfecto.</span></li>
+      </ul>
+      <a href="olmist-v2/producto.html" class="btn-rose">Ver Cotton Pink</a>
+    </div>
+    <div class="split-image">
+      <img src="./5a9bab23-b0d5-43d6-83cb-b3b934ec2a1e_processed.png" alt="Olmist Cotton Pink" />
+    </div>
+  </section>
+
+  <!-- TEMPERATURA -->
   <section class="temp-section">
-    <div class="section-header">
-      <span class="section-eyebrow">Control Total</span>
-      <h2 class="section-title">3 temperaturas,<br /><em>un resultado perfecto</em></h2>
+    <div class="temp-header animate-in">
+      <span class="scene-eyebrow">Control Total</span>
+      <h2 class="scene-title" style="font-size: clamp(2.5rem, 4vw, 4rem);">3 temperaturas,<br /><em>un resultado perfecto.</em></h2>
     </div>
     <div class="temp-grid">
-      <div class="temp-card">
+      <div class="temp-card animate-in">
         <div class="temp-degree">160°</div>
         <div class="temp-level">Temperatura Baja</div>
         <div class="temp-type">Cabello Fino</div>
-        <p class="temp-desc">Ideal para cabellos delicados o dañados. Suavidad máxima sin comprometer el resultado.</p>
+        <p class="temp-desc">Para cabellos delicados. Suavidad máxima sin comprometer el resultado.</p>
       </div>
-      <div class="temp-card">
+      <div class="temp-card animate-in">
         <div class="temp-degree">180°</div>
         <div class="temp-level">Temperatura Media</div>
         <div class="temp-type">Cabello Normal</div>
-        <p class="temp-desc">El equilibrio perfecto para la mayoría de tipos de cabello. Resultados brillantes y naturales.</p>
+        <p class="temp-desc">El equilibrio perfecto. Resultados brillantes y naturales para el día a día.</p>
       </div>
-      <div class="temp-card">
+      <div class="temp-card animate-in">
         <div class="temp-degree">200°</div>
         <div class="temp-level">Temperatura Alta</div>
         <div class="temp-type">Cabello Grueso</div>
-        <p class="temp-desc">Potencia máxima para dominar los cabellos más rebeldes y resistentes.</p>
+        <p class="temp-desc">Potencia máxima para dominar los cabellos más rebeldes.</p>
       </div>
     </div>
   </section>
 
-  <!-- LIFESTYLE -->
-  <section class="lifestyle">
-    <div class="lifestyle-content">
-      <span class="section-eyebrow">Para Cada Momento</span>
-      <h2 class="section-title">Tu compañero<br />de <em>viaje</em></h2>
-      <p style="font-size:0.95rem; font-weight:300; line-height:1.7; color:var(--grey); margin: 1.5rem 0 2.5rem; max-width:420px;">
-        Diseñado para encajar en tu rutina sin importar dónde estés. Viajes de negocios, escapadas de fin de semana o el día a día — Olmist siempre está contigo.
+  <!-- LIFESTYLE SPLIT -->
+  <section class="split">
+    <div class="split-image">
+      <img src="./3c92958b-0e06-4308-9b52-07bcef6c125e.png" alt="Olmist lifestyle viaje" />
+    </div>
+    <div class="split-content dark animate-in">
+      <span class="scene-eyebrow">Para cada momento</span>
+      <h2 class="scene-title">Tu compañero<br />de <em>viaje</em>.</h2>
+      <p style="font-size: 0.95rem; font-weight: 300; line-height: 1.7; color: rgba(255,255,255,0.55); margin: 1.5rem 0 2.5rem; max-width: 380px;">
+        Diseñado para encajar en tu rutina sin importar dónde estés. Viajes, trabajo o el día a día — Olmist siempre está contigo.
       </p>
-      <a href="producto.html" class="btn-primary">Descubrir ahora</a>
-    </div>
-    <div class="lifestyle-image">
-      <img src="3c92958b-0e06-4308-9b52-07bcef6c125e.png" alt="Olmist en bolsa de viaje" />
-    </div>
-  </section>
-
-  <!-- SPECS -->
-  <section class="specs">
-    <div class="section-header">
-      <span class="section-eyebrow">Especificaciones</span>
-      <h2 class="section-title">Los <em>detalles</em><br />que importan</h2>
-    </div>
-    <div class="specs-grid">
-      <div class="spec-item">
-        <span class="spec-label">Potencia</span>
-        <span class="spec-value">25W</span>
-      </div>
-      <div class="spec-item">
-        <span class="spec-label">Fuente de alimentación</span>
-        <span class="spec-value">Batería</span>
-      </div>
-      <div class="spec-item">
-        <span class="spec-label">Temperatura máxima</span>
-        <span class="spec-value">200°C</span>
-      </div>
-      <div class="spec-item">
-        <span class="spec-label">Niveles de temperatura</span>
-        <span class="spec-value">3 niveles</span>
-      </div>
-      <div class="spec-item">
-        <span class="spec-label">Calentamiento</span>
-        <span class="spec-value">30 segundos</span>
-      </div>
-      <div class="spec-item">
-        <span class="spec-label">Tipo de cabello</span>
-        <span class="spec-value">Todos los tipos</span>
-      </div>
-      <div class="spec-item">
-        <span class="spec-label">Conectividad</span>
-        <span class="spec-value">Inalámbrico</span>
-      </div>
-      <div class="spec-item">
-        <span class="spec-label">Protección</span>
-        <span class="spec-value">Anti-quemaduras</span>
-      </div>
+      <a href="olmist-v2/producto.html" class="btn-ghost">Comprar ahora</a>
     </div>
   </section>
 
   <!-- TESTIMONIALS -->
-  <section class="testimonials" id="opiniones">
-    <div class="section-header">
-      <span class="section-eyebrow">Lo que dicen</span>
-      <h2 class="section-title">Ellas ya lo<br /><em>eligieron</em></h2>
+  <section class="testimonials">
+    <div class="temp-header animate-in" style="color: var(--black);">
+      <span class="scene-eyebrow">Lo que dicen</span>
+      <h2 class="scene-title" style="font-size: clamp(2.5rem, 4vw, 4rem); color: var(--black);">Ellas ya lo<br /><em>eligieron.</em></h2>
     </div>
     <div class="testimonials-grid">
-      <div class="testimonial-card">
+      <div class="testimonial-card animate-in">
         <div class="testimonial-stars">★★★★★</div>
         <p class="testimonial-text">"Lo llevo en el bolso a todas partes. Es increíble lo rápido que calienta y el resultado es perfecto."</p>
         <span class="testimonial-author">— María G., Madrid</span>
       </div>
-      <div class="testimonial-card">
+      <div class="testimonial-card animate-in">
         <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"Viajo mucho por trabajo y este cepillo ha cambiado mi rutina completamente. Lo recomiendo a todas mis amigas."</p>
+        <p class="testimonial-text">"Viajo mucho por trabajo y este cepillo ha cambiado mi rutina completamente. Lo recomiendo a todas."</p>
         <span class="testimonial-author">— Laura M., Barcelona</span>
       </div>
-      <div class="testimonial-card">
+      <div class="testimonial-card animate-in">
         <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"Tengo el cabello muy grueso y nunca había encontrado algo tan compacto que funcionara tan bien. Un 10."</p>
+        <p class="testimonial-text">"Tengo el cabello muy grueso y nunca había encontrado algo tan compacto que funcionara tan bien."</p>
         <span class="testimonial-author">— Sofía R., Valencia</span>
       </div>
     </div>
   </section>
 
   <!-- CTA FINAL -->
-  <section class="cta-final" id="comprar">
-    <span class="section-eyebrow">Únete a Olmist</span>
-    <h2 class="section-title">Tu mejor<br /><em>día de pelo</em><br />empieza aquí.</h2>
-    <p class="cta-subtitle">Sin cables. Sin compromisos. Solo resultados profesionales donde quieras, cuando quieras.</p>
-    <a href="producto.html" class="btn-primary-rose">Comprar Ahora</a>
+  <section class="cta-final">
+    <div class="cta-bg"></div>
+    <div class="cta-content animate-in">
+      <span class="scene-eyebrow">Únete a Olmist</span>
+      <h2 class="scene-title">Tu mejor<br /><em>día de pelo</em><br />empieza aquí.</h2>
+      <p class="scene-sub">Sin cables. Sin compromisos. Solo resultados donde quieras, cuando quieras.</p>
+      <a href="olmist-v2/producto.html" class="btn-rose">Comprar Ahora</a>
+    </div>
   </section>
 
   <!-- FOOTER -->
@@ -974,11 +714,42 @@
     <div class="footer-logo">Olmist</div>
     <p class="footer-copy">© 2025 Olmist. Todos los derechos reservados.</p>
     <ul class="footer-links">
-      <li><a href="#">Política de privacidad</a></li>
+      <li><a href="#">Privacidad</a></li>
       <li><a href="#">Devoluciones</a></li>
       <li><a href="#">Contacto</a></li>
     </ul>
   </footer>
+
+  <script>
+
+    // Intersection Observer para animaciones al hacer scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.animate-in, #hero-content, .temp-header, .temp-card, .testimonial-card, .cta-content').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Parallax suave en el hero
+    const heroBg = document.querySelector('.scene .scene-bg');
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      if (scrolled < window.innerHeight) {
+        heroBg.style.transform = `scale(1.05) translateY(${scrolled * 0.2}px)`;
+      }
+    }, { passive: true });
+
+
+    // Trigger hero inmediatamente
+    setTimeout(() => {
+      document.getElementById('hero-content').classList.add('visible');
+    }, 200);
+  </script>
 
 </body>
 </html>
