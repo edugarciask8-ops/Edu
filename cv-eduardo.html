@@ -100,10 +100,10 @@
     }
 
     /* ══ SECTION GRID: 3 cols ══ */
-    /* label | mid | desc */
     .sec {
       display: grid;
       grid-template-columns: 90px 160px 1fr;
+      grid-auto-rows: auto;
       margin-bottom: 10px;
     }
 
@@ -113,25 +113,21 @@
       letter-spacing: 1.2px;
       text-transform: uppercase;
       padding-top: 2px;
-      grid-row: 1;
       grid-column: 1;
+      grid-row: 1;
     }
 
-    /* each experience row */
     .e-mid {
+      grid-column: 2;
       padding: 0 14px 12px 0;
       border-right: 1px solid var(--line);
     }
 
     .e-desc {
+      grid-column: 3;
       padding: 0 0 12px 14px;
       font-size: 6.5pt;
       line-height: 1.6;
-    }
-
-    .e-mid:last-of-type,
-    .e-desc:last-of-type {
-      padding-bottom: 0;
     }
 
     .e-title {
