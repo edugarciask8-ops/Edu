@@ -122,12 +122,12 @@
     .e-desc:last-of-type { padding-bottom: 0; }
 
     .e-title {
-      font-size: 7pt;
+      font-size: 7.5pt;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.2px;
+      letter-spacing: 0.3px;
       line-height: 1.2;
-      margin-bottom: 2px;
+      margin-bottom: 3px;
     }
 
     .e-company {
@@ -145,19 +145,22 @@
     .edu-mid {
       grid-column: 2;
       padding: 0 16px 9px 0;
+      border-bottom: 1px solid var(--line);
     }
 
-    .edu-mid:last-of-type { padding-bottom: 0; }
+    .edu-mid:last-of-type { padding-bottom: 0; border-bottom: none; }
 
     .edu-year {
       grid-column: 3;
-      font-size: 6pt;
+      font-size: 8.5pt;
+      font-weight: 300;
       color: var(--muted);
       text-align: right;
       padding-bottom: 9px;
+      border-bottom: 1px solid var(--line);
     }
 
-    .edu-year:last-of-type { padding-bottom: 0; }
+    .edu-year:last-of-type { padding-bottom: 0; border-bottom: none; }
 
     .edu-title {
       font-size: 7pt;
@@ -185,19 +188,22 @@
     .aw-mid {
       grid-column: 2;
       padding: 0 16px 9px 0;
+      border-bottom: 1px solid var(--line);
     }
 
-    .aw-mid:last-of-type { padding-bottom: 0; }
+    .aw-mid:last-of-type { padding-bottom: 0; border-bottom: none; }
 
     .aw-year {
       grid-column: 3;
-      font-size: 6pt;
+      font-size: 8.5pt;
+      font-weight: 300;
       color: var(--muted);
       text-align: right;
       padding-bottom: 9px;
+      border-bottom: 1px solid var(--line);
     }
 
-    .aw-year:last-of-type { padding-bottom: 0; }
+    .aw-year:last-of-type { padding-bottom: 0; border-bottom: none; }
 
     .aw-title {
       font-size: 7pt;
@@ -231,6 +237,11 @@
       list-style: none;
       font-size: 6.5pt;
       line-height: 1.8;
+    }
+
+    .sk-list li::before {
+      content: '• ';
+      color: var(--muted);
     }
 
     /* ══ FOOTER ══ */
