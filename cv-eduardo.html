@@ -16,10 +16,7 @@
       --line: #c0bab2;
     }
 
-    html, body {
-      margin: 0;
-      padding: 0;
-    }
+    html, body { margin: 0; padding: 0; }
 
     body {
       background: #888;
@@ -27,9 +24,8 @@
       color: var(--text);
       display: flex;
       justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
       padding: 24px 0;
+      min-height: 100vh;
     }
 
     .page {
@@ -39,264 +35,210 @@
       flex-shrink: 0;
       box-shadow: 0 4px 24px rgba(0,0,0,0.35);
       overflow: hidden;
+      padding: 30px 34px 20px 34px;
       display: flex;
       flex-direction: column;
     }
 
-    /* ── HEADER ── */
+    /* ══ HEADER ══ */
     .header {
       display: grid;
-      grid-template-columns: 200px 80px 1fr;
-      gap: 0 16px;
-      padding: 28px 32px 0 32px;
-      margin-bottom: 6px;
-      align-items: start;
+      grid-template-columns: 180px 90px 1fr;
+      column-gap: 18px;
+      margin-bottom: 14px;
     }
 
-    .header-name {
-    }
-
-    .header-name h1 {
-      font-size: 20pt;
+    .h-name h1 {
+      font-size: 24pt;
       font-weight: 700;
       line-height: 1.0;
       letter-spacing: -0.5px;
-      margin-bottom: 5px;
+      margin-bottom: 4px;
     }
 
-    .header-name .job-title {
-      font-size: 7pt;
-      font-weight: 400;
+    .h-name .subtitle {
+      font-size: 6.5pt;
       color: var(--muted);
       letter-spacing: 0.3px;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
-    .header-name .contact {
+    .h-name .contact {
       font-size: 6.5pt;
       color: var(--muted);
       line-height: 1.7;
     }
 
-    .header-photo {
-      width: 80px;
-      height: 96px;
+    .h-photo {
+      width: 90px;
+      height: 108px;
       background: #b0aa9e;
-      flex-shrink: 0;
     }
 
-    .header-bio {
-      padding-left: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
+    .h-bio {
+      padding-top: 2px;
     }
 
-    .header-bio .bio-label {
+    .h-bio .bio-label {
       font-size: 6.5pt;
       font-weight: 700;
-      letter-spacing: 1px;
+      letter-spacing: 1.2px;
       text-transform: uppercase;
-      margin-bottom: 6px;
+      margin-bottom: 7px;
     }
 
-    .header-bio p {
+    .h-bio p {
       font-size: 6.5pt;
-      line-height: 1.55;
-      color: var(--text);
+      line-height: 1.6;
     }
 
-    /* ── DIVIDER ── */
-    .divider {
+    /* ══ DIVIDER ══ */
+    .hr {
       border: none;
       border-top: 1px solid var(--line);
-      margin: 10px 32px;
+      margin: 0 0 10px 0;
     }
 
-    /* ── BODY ── */
-    .body {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      padding: 0 32px;
-    }
-
-    /* ── SECTION ROW: label | mid | content ── */
-    .section {
+    /* ══ SECTION GRID: 3 cols ══ */
+    /* label | mid | desc */
+    .sec {
       display: grid;
-      grid-template-columns: 88px 160px 1fr;
-      gap: 0;
+      grid-template-columns: 90px 160px 1fr;
+      margin-bottom: 10px;
     }
 
     .sec-label {
       font-size: 6.5pt;
       font-weight: 700;
-      letter-spacing: 1px;
+      letter-spacing: 1.2px;
       text-transform: uppercase;
       padding-top: 2px;
-      color: var(--text);
+      grid-row: 1;
+      grid-column: 1;
     }
 
-    .sec-entries {
-      display: flex;
-      flex-direction: column;
+    /* each experience row */
+    .e-mid {
+      padding: 0 14px 12px 0;
       border-right: 1px solid var(--line);
-      padding-right: 16px;
-      margin-right: 16px;
     }
 
-    .sec-descriptions {
-      display: flex;
-      flex-direction: column;
+    .e-desc {
+      padding: 0 0 12px 14px;
+      font-size: 6.5pt;
+      line-height: 1.6;
     }
 
-    /* ── EXPERIENCE ENTRY ── */
-    .exp-entry {
-      display: contents;
+    .e-mid:last-of-type,
+    .e-desc:last-of-type {
+      padding-bottom: 0;
     }
 
-    .exp-mid {
-      padding-bottom: 10px;
-    }
-
-    .exp-mid .exp-title {
-      font-size: 7.5pt;
+    .e-title {
+      font-size: 7pt;
       font-weight: 700;
       text-transform: uppercase;
+      letter-spacing: 0.2px;
       line-height: 1.2;
       margin-bottom: 2px;
-      letter-spacing: 0.2px;
     }
 
-    .exp-mid .exp-company {
+    .e-company {
       font-size: 6.5pt;
       color: var(--muted);
       margin-bottom: 1px;
     }
 
-    .exp-mid .exp-date {
+    .e-date {
       font-size: 6pt;
       color: var(--muted);
     }
 
-    .exp-desc {
-      font-size: 6.5pt;
-      line-height: 1.55;
-      padding-bottom: 10px;
-    }
-
-    /* ── BOTTOM GRID ── */
-    .bottom-section {
+    /* ══ BOTTOM: edu / awards / skills ══ */
+    .bottom {
       display: grid;
-      grid-template-columns: 88px 1fr;
-      gap: 0;
-      margin-top: 4px;
+      grid-template-columns: 90px 1fr;
+      margin-top: auto;
     }
 
     .bottom-grid {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 0 20px;
+      column-gap: 18px;
     }
 
-    .col-label {
+    .col-title {
       font-size: 6.5pt;
       font-weight: 700;
-      letter-spacing: 1px;
+      letter-spacing: 1.2px;
       text-transform: uppercase;
-      margin-bottom: 8px;
+      margin-bottom: 9px;
     }
 
-    .edu-entry {
-      margin-bottom: 8px;
+    .b-entry {
+      margin-bottom: 9px;
     }
 
-    .edu-entry .year {
+    .b-entry .year {
       font-size: 6pt;
       color: var(--muted);
       margin-bottom: 1px;
     }
 
-    .edu-entry h4 {
-      font-size: 7pt;
+    .b-entry h4 {
+      font-size: 6.5pt;
       font-weight: 700;
       text-transform: uppercase;
+      letter-spacing: 0.2px;
       line-height: 1.2;
       margin-bottom: 1px;
-      letter-spacing: 0.2px;
     }
 
-    .edu-entry .inst {
+    .b-entry .inst {
       font-size: 6pt;
       color: var(--muted);
     }
 
-    .edu-entry .tfg {
-      font-size: 6pt;
+    .b-entry .tfg {
+      font-size: 5.5pt;
       color: var(--muted);
       font-style: italic;
       line-height: 1.4;
     }
 
-    .award-entry {
-      margin-bottom: 8px;
-    }
-
-    .award-entry .year {
-      font-size: 6pt;
-      color: var(--muted);
-      margin-bottom: 1px;
-    }
-
-    .award-entry h4 {
-      font-size: 7pt;
-      font-weight: 700;
-      text-transform: uppercase;
-      line-height: 1.2;
-      margin-bottom: 1px;
-      letter-spacing: 0.2px;
-    }
-
-    .award-entry .detail {
+    .b-entry .detail {
       font-size: 6pt;
       color: var(--muted);
     }
 
-    .skills-group {
-      margin-bottom: 8px;
-    }
+    .sk-group { margin-bottom: 8px; }
 
-    .skills-group-title {
+    .sk-group-title {
       font-size: 6.5pt;
       font-weight: 600;
       margin-bottom: 4px;
     }
 
-    .skills-list {
+    .sk-list {
       list-style: none;
-      padding: 0;
-    }
-
-    .skills-list li {
       font-size: 6.5pt;
-      line-height: 1.7;
-      color: var(--text);
+      line-height: 1.75;
     }
 
-    /* ── FOOTER ── */
+    /* ══ FOOTER ══ */
     .footer {
       display: flex;
       justify-content: space-between;
       font-size: 6.5pt;
       color: var(--muted);
-      padding: 8px 32px;
       border-top: 1px solid var(--line);
-      margin-top: auto;
+      padding-top: 8px;
+      margin-top: 12px;
     }
 
     @media print {
       html, body { background: none; display: block; padding: 0; }
-      .page { width: 210mm; height: 297mm; box-shadow: none; }
+      .page { width: 210mm; height: 297mm; box-shadow: none; padding: 10mm 12mm 8mm 12mm; }
     }
   </style>
 </head>
@@ -305,168 +247,136 @@
 
   <!-- HEADER -->
   <div class="header">
-    <div class="header-name">
+    <div class="h-name">
       <h1>Eduardo<br>García Vidal</h1>
-      <div class="job-title">Arquitecto &nbsp;·&nbsp; BIM Coordinator</div>
+      <div class="subtitle">Arquitecto &nbsp;·&nbsp; BIM Coordinator</div>
       <div class="contact">
         +34 644 54 72 79<br>
         Edugarciarq@gmail.com<br>
         Zaragoza, España
       </div>
     </div>
-
-    <div class="header-photo"></div>
-
-    <div class="header-bio">
+    <div class="h-photo"></div>
+    <div class="h-bio">
       <div class="bio-label">Perfil</div>
       <p>Arquitecto con experiencia en proyectos de alta complejidad técnica, especializado en coordinación BIM, estándar Passive House y licitaciones públicas. Perfil polivalente con capacidad para liderar proyectos desde la fase de diseño hasta la ejecución, con dominio de herramientas avanzadas como Revit, Navisworks y Autodesk Construction Cloud.</p>
     </div>
   </div>
 
-  <hr class="divider">
+  <div class="hr"></div>
 
-  <div class="body">
+  <!-- EXPERIENCIA -->
+  <div class="sec">
+    <div class="sec-label">Experiencia</div>
 
-    <!-- EXPERIENCIA -->
-    <div class="section">
-      <div class="sec-label">Experiencia</div>
-      <div class="sec-entries">
-
-        <div class="exp-mid">
-          <div class="exp-title">Arquitecto por encargo</div>
-          <div class="exp-company">Santiago Carroquino Arquitectos</div>
-          <div class="exp-date">01/2023 · Zaragoza</div>
-        </div>
-
-        <div class="exp-mid">
-          <div class="exp-title">Arquitecto e Interiorista en Prácticas</div>
-          <div class="exp-company">BMZ Arquitectos</div>
-          <div class="exp-date">06/2023 – 09/2023 · Zaragoza</div>
-        </div>
-
-        <div class="exp-mid">
-          <div class="exp-title">Arquitecto Passive House y BIM en Prácticas</div>
-          <div class="exp-company">BIONM Estudio</div>
-          <div class="exp-date">09/2023 – 09/2024 · Zaragoza</div>
-        </div>
-
-        <div class="exp-mid">
-          <div class="exp-title">Arquitecto BIM y Licitaciones Públicas</div>
-          <div class="exp-company">Negrosobreazul</div>
-          <div class="exp-date">09/2025 – 01/2026 · Valencia</div>
-        </div>
-
-        <div class="exp-mid" style="padding-bottom:0">
-          <div class="exp-title">Arquitecto y BIM Coordinator — Data Centers</div>
-          <div class="exp-company">Carbonell Figueras</div>
-          <div class="exp-date">01/2026 – 04/2026 · Huesca</div>
-        </div>
-
-      </div>
-      <div class="sec-descriptions">
-
-        <div class="exp-desc">Modelado 3D e infografías para el nuevo Centro Integrado de Coordinación de Emergencias de Aragón (CICEA).</div>
-
-        <div class="exp-desc">Documentación gráfica con AutoCAD, SketchUp e InDesign. Infografías con V-Ray y Photoshop. Diseño de interiores y mobiliario a medida en proyectos de rehabilitación residencial y hostelera.</div>
-
-        <div class="exp-desc">Proyectos de ejecución bajo estándar Passive House con Revit y BIM. Memorias técnicas, estudios de seguridad y salud y gestión de residuos. Visualización con Twinmotion y Enscape.</div>
-
-        <div class="exp-desc">Gestión integral de concursos públicos con BIM (Revit): oficinas de turismo, bibliotecas y vivienda colectiva. Liderazgo de equipos y coordinación de entregables.</div>
-
-        <div class="exp-desc" style="padding-bottom:0">Coordinación BIM con Revit y Navisworks. Autodesk Construction Cloud y Forma. Detección de interferencias entre sistemas estructurales, MEP y arquitectónicos.</div>
-
-      </div>
+    <div class="e-mid">
+      <div class="e-title">Arquitecto por encargo</div>
+      <div class="e-company">Santiago Carroquino Arquitectos</div>
+      <div class="e-date">01/2023 · Zaragoza</div>
     </div>
+    <div class="e-desc">Modelado 3D e infografías para el nuevo Centro Integrado de Coordinación de Emergencias de Aragón (CICEA).</div>
 
-    <hr class="divider">
-
-    <!-- BOTTOM -->
-    <div class="bottom-section">
-      <div class="sec-label" style="padding-top:2px"></div>
-      <div class="bottom-grid">
-
-        <!-- EDUCACIÓN -->
-        <div>
-          <div class="col-label">Educación</div>
-
-          <div class="edu-entry">
-            <div class="year">2015 – 2020</div>
-            <h4>Grado en Arquitectura</h4>
-            <div class="inst">Univ. de Zaragoza</div>
-            <div class="tfg">TFG: La luz como génesis del proyecto en la arq. de Eduardo de Miguel</div>
-          </div>
-
-          <div class="edu-entry">
-            <div class="year">2021 – 2022</div>
-            <h4>Máster Habilitante en Arquitectura</h4>
-            <div class="inst">Universitat Politècnica de València</div>
-          </div>
-
-          <div class="edu-entry">
-            <div class="year">2024</div>
-            <h4>IA en Arquitectura</h4>
-            <div class="inst">Never Enough Architecture</div>
-          </div>
-        </div>
-
-        <!-- PREMIOS -->
-        <div>
-          <div class="col-label">Premios</div>
-
-          <div class="award-entry">
-            <div class="year">2019</div>
-            <h4>Cosentino Design Challenge 13</h4>
-            <div class="detail">1er Premio Internacional</div>
-          </div>
-
-          <div class="award-entry">
-            <div class="year">2022</div>
-            <h4>Foro Cerámico HYSPALYT</h4>
-            <div class="detail">1er Premio Local · 2ª Mención Nacional</div>
-          </div>
-
-          <div class="award-entry">
-            <div class="year">2024</div>
-            <h4>NEA — IA x Biomimicry</h4>
-            <div class="detail">Mención Honorífica Internacional</div>
-          </div>
-        </div>
-
-        <!-- HABILIDADES -->
-        <div>
-          <div class="col-label">Habilidades</div>
-
-          <div class="skills-group">
-            <div class="skills-group-title">Software</div>
-            <ul class="skills-list">
-              <li>AutoCAD</li>
-              <li>Revit</li>
-              <li>SketchUp</li>
-              <li>V-Ray</li>
-              <li>Twinmotion</li>
-              <li>Enscape</li>
-              <li>Photoshop</li>
-              <li>InDesign</li>
-              <li>Navisworks</li>
-              <li>ArchiCAD</li>
-              <li>Q-GIS</li>
-            </ul>
-          </div>
-
-          <div class="skills-group">
-            <div class="skills-group-title">Idiomas</div>
-            <ul class="skills-list">
-              <li>Castellano — Nativo</li>
-              <li>Inglés — B2</li>
-              <li>Francés — A2</li>
-              <li>Alemán — A1</li>
-            </ul>
-          </div>
-        </div>
-
-      </div>
+    <div class="e-mid">
+      <div class="e-title">Arquitecto e Interiorista en Prácticas</div>
+      <div class="e-company">BMZ Arquitectos</div>
+      <div class="e-date">06/2023 – 09/2023 · Zaragoza</div>
     </div>
+    <div class="e-desc">Documentación gráfica con AutoCAD, SketchUp e InDesign. Infografías con V-Ray y Photoshop. Diseño de interiores y mobiliario a medida en proyectos de rehabilitación residencial y hostelera.</div>
 
+    <div class="e-mid">
+      <div class="e-title">Arquitecto Passive House y BIM en Prácticas</div>
+      <div class="e-company">BIONM Estudio</div>
+      <div class="e-date">09/2023 – 09/2024 · Zaragoza</div>
+    </div>
+    <div class="e-desc">Proyectos de ejecución bajo estándar Passive House con Revit y BIM. Memorias técnicas, estudios de seguridad y salud y gestión de residuos. Visualización con Twinmotion y Enscape.</div>
+
+    <div class="e-mid">
+      <div class="e-title">Arquitecto BIM y Licitaciones Públicas</div>
+      <div class="e-company">Negrosobreazul</div>
+      <div class="e-date">09/2025 – 01/2026 · Valencia</div>
+    </div>
+    <div class="e-desc">Gestión integral de concursos públicos con BIM (Revit): oficinas de turismo, bibliotecas y vivienda colectiva. Liderazgo de equipos y coordinación de entregables.</div>
+
+    <div class="e-mid" style="padding-bottom:0">
+      <div class="e-title">Arquitecto y BIM Coordinator — Data Centers</div>
+      <div class="e-company">Carbonell Figueras</div>
+      <div class="e-date">01/2026 – 04/2026 · Huesca</div>
+    </div>
+    <div class="e-desc" style="padding-bottom:0">Coordinación BIM con Revit y Navisworks. Autodesk Construction Cloud y Forma. Detección de interferencias entre sistemas estructurales, MEP y arquitectónicos.</div>
+  </div>
+
+  <div class="hr"></div>
+
+  <!-- BOTTOM -->
+  <div class="bottom">
+    <div></div>
+    <div class="bottom-grid">
+
+      <!-- EDUCACIÓN -->
+      <div>
+        <div class="col-title">Educación</div>
+        <div class="b-entry">
+          <div class="year">2015 – 2020</div>
+          <h4>Grado en Arquitectura</h4>
+          <div class="inst">Univ. de Zaragoza</div>
+          <div class="tfg">TFG: La luz como génesis del proyecto en la arq. de Eduardo de Miguel</div>
+        </div>
+        <div class="b-entry">
+          <div class="year">2021 – 2022</div>
+          <h4>Máster Habilitante en Arquitectura</h4>
+          <div class="inst">Universitat Politècnica de València</div>
+        </div>
+        <div class="b-entry">
+          <div class="year">2024</div>
+          <h4>IA en Arquitectura</h4>
+          <div class="inst">Never Enough Architecture</div>
+        </div>
+      </div>
+
+      <!-- PREMIOS -->
+      <div>
+        <div class="col-title">Premios</div>
+        <div class="b-entry">
+          <div class="year">2019</div>
+          <h4>Cosentino Design Challenge 13</h4>
+          <div class="detail">1er Premio Internacional</div>
+        </div>
+        <div class="b-entry">
+          <div class="year">2022</div>
+          <h4>Foro Cerámico HYSPALYT</h4>
+          <div class="detail">1er Premio Local · 2ª Mención Nacional</div>
+        </div>
+        <div class="b-entry">
+          <div class="year">2024</div>
+          <h4>NEA — IA x Biomimicry</h4>
+          <div class="detail">Mención Honorífica Internacional</div>
+        </div>
+      </div>
+
+      <!-- HABILIDADES -->
+      <div>
+        <div class="col-title">Habilidades</div>
+        <div class="sk-group">
+          <div class="sk-group-title">Software</div>
+          <ul class="sk-list">
+            <li>AutoCAD</li><li>Revit</li><li>SketchUp</li>
+            <li>V-Ray</li><li>Twinmotion</li><li>Enscape</li>
+            <li>Photoshop</li><li>InDesign</li><li>Navisworks</li>
+            <li>ArchiCAD</li><li>Q-GIS</li>
+          </ul>
+        </div>
+        <div class="sk-group">
+          <div class="sk-group-title">Idiomas</div>
+          <ul class="sk-list">
+            <li>Castellano — Nativo</li>
+            <li>Inglés — B2</li>
+            <li>Francés — A2</li>
+            <li>Alemán — A1</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
   </div>
 
   <!-- FOOTER -->
