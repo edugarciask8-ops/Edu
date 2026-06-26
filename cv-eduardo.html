@@ -121,11 +121,9 @@
     .e-mid {
       grid-column: 2;
       padding: 0 16px 10px 0;
-      border-bottom: 1px solid var(--line);
     }
 
     .e-mid:last-of-type {
-      border-bottom: none;
       padding-bottom: 0;
     }
 
@@ -134,11 +132,9 @@
       padding: 0 0 10px 0;
       font-size: 6pt;
       line-height: 1.55;
-      border-bottom: 1px solid var(--line);
     }
 
     .e-desc:last-of-type {
-      border-bottom: none;
       padding-bottom: 0;
     }
 
@@ -162,10 +158,10 @@
       color: var(--muted);
     }
 
-    /* ══ BOTTOM: edu / awards / skills ══ */
+    /* ══ BOTTOM ══ */
     .bottom {
       display: grid;
-      grid-template-columns: 90px 1fr;
+      grid-template-columns: 198px 1fr;
       margin-top: auto;
     }
 
@@ -180,11 +176,21 @@
       font-weight: 700;
       letter-spacing: 1.2px;
       text-transform: uppercase;
-      margin-bottom: 9px;
+      padding-bottom: 7px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 7px;
     }
 
     .b-entry {
-      margin-bottom: 9px;
+      padding-bottom: 7px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 7px;
+    }
+
+    .b-entry:last-of-type {
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
     }
 
     .b-entry .year {
@@ -219,12 +225,22 @@
       color: var(--muted);
     }
 
-    .sk-group { margin-bottom: 8px; }
+    .sk-group {
+      padding-bottom: 7px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 7px;
+    }
+
+    .sk-group:last-of-type {
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
 
     .sk-group-title {
       font-size: 6.5pt;
       font-weight: 600;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
 
     .sk-list {
