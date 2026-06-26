@@ -28,10 +28,19 @@
 
     .page {
       background: var(--bg);
-      width: 210mm;
-      min-height: 297mm;
+      width: 794px;
+      min-height: 1123px;
       margin: 20px auto;
-      padding: 14mm 14mm 12mm 14mm;
+      padding: 53px 53px 45px 53px;
+    }
+
+    @media print {
+      .page {
+        width: 210mm;
+        min-height: 297mm;
+        padding: 14mm 14mm 12mm 14mm;
+        margin: 0;
+      }
     }
 
     /* ── HEADER ── */
@@ -260,7 +269,7 @@
 
     @media print {
       body { background: none; }
-      .page { margin: 0; box-shadow: none; }
+      .page { box-shadow: none; }
     }
   </style>
 </head>
