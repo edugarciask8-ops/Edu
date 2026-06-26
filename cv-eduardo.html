@@ -102,7 +102,8 @@
     /* ══ SECTION GRID: 3 cols ══ */
     .sec {
       display: grid;
-      grid-template-columns: 90px 160px 1fr;
+      grid-template-columns: 198px 160px 1fr;
+      column-gap: 0;
       grid-auto-rows: auto;
       margin-bottom: 10px;
     }
@@ -119,15 +120,26 @@
 
     .e-mid {
       grid-column: 2;
-      padding: 0 14px 12px 0;
-      border-right: 1px solid var(--line);
+      padding: 0 16px 10px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .e-mid:last-of-type {
+      border-bottom: none;
+      padding-bottom: 0;
     }
 
     .e-desc {
       grid-column: 3;
-      padding: 0 0 12px 14px;
-      font-size: 6.5pt;
-      line-height: 1.6;
+      padding: 0 0 10px 0;
+      font-size: 6pt;
+      line-height: 1.55;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .e-desc:last-of-type {
+      border-bottom: none;
+      padding-bottom: 0;
     }
 
     .e-title {
@@ -245,12 +257,6 @@
   <div class="header">
     <div class="h-name">
       <h1>Eduardo<br>García Vidal</h1>
-      <div class="subtitle">Arquitecto &nbsp;·&nbsp; BIM Coordinator</div>
-      <div class="contact">
-        +34 644 54 72 79<br>
-        Edugarciarq@gmail.com<br>
-        Zaragoza, España
-      </div>
     </div>
     <div class="h-photo"></div>
     <div class="h-bio">
@@ -381,6 +387,7 @@
     <span>+34 644 54 72 79</span>
     <span>Edugarciarq@gmail.com</span>
   </div>
+
 
 </div>
 </body>
