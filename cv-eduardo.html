@@ -12,10 +12,8 @@
     :root {
       --bg: #e8e3d8;
       --text: #1a1a1a;
-      --muted: #6b6b6b;
-      --line: #b0aa9e;
-      --col-label: 130px;
-      --col-mid: 200px;
+      --muted: #7a7570;
+      --line: #c0bab2;
     }
 
     html, body {
@@ -26,15 +24,12 @@
     body {
       background: #888;
       font-family: 'Inter', sans-serif;
-      font-size: 7pt;
       color: var(--text);
-      line-height: 1.4;
       display: flex;
       justify-content: center;
       align-items: flex-start;
       min-height: 100vh;
       padding: 24px 0;
-      box-sizing: border-box;
     }
 
     .page {
@@ -42,244 +37,266 @@
       width: 794px;
       height: 1123px;
       flex-shrink: 0;
-      padding: 36px 44px 30px 44px;
       box-shadow: 0 4px 24px rgba(0,0,0,0.35);
       overflow: hidden;
-    }
-
-    @media print {
-      html, body {
-        background: none;
-        display: block;
-        padding: 0;
-      }
-      .page {
-        width: 210mm;
-        min-height: 297mm;
-        padding: 14mm 14mm 12mm 14mm;
-        box-shadow: none;
-      }
+      display: flex;
+      flex-direction: column;
     }
 
     /* ── HEADER ── */
     .header {
       display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 12px;
-      margin-bottom: 6mm;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 0;
+      padding: 28px 32px 0 32px;
+      margin-bottom: 6px;
     }
 
-    .header-left h1 {
-      font-size: 18pt;
+    .header-name {
+      padding-right: 20px;
+    }
+
+    .header-name h1 {
+      font-size: 28pt;
       font-weight: 700;
-      line-height: 1.05;
+      line-height: 1.0;
       letter-spacing: -0.5px;
-      margin-bottom: 4px;
+      margin-bottom: 5px;
     }
 
-    .header-left .titles {
-      font-size: 7.5pt;
+    .header-name .job-title {
+      font-size: 7pt;
       font-weight: 400;
       color: var(--muted);
-      letter-spacing: 0.5px;
-      margin-bottom: 7px;
+      letter-spacing: 0.3px;
+      margin-bottom: 8px;
     }
 
-    .header-left .bio {
-      font-size: 7.5pt;
-      color: var(--text);
-      max-width: 110mm;
-      line-height: 1.5;
+    .header-name .contact {
+      font-size: 6.5pt;
+      color: var(--muted);
+      line-height: 1.7;
     }
 
-    .photo-placeholder {
-      width: 28mm;
-      height: 33mm;
+    .header-photo {
+      width: 80px;
+      height: 96px;
       background: #b0aa9e;
+      flex-shrink: 0;
+    }
+
+    .header-bio {
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .header-bio .bio-label {
+      font-size: 6.5pt;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .header-bio p {
+      font-size: 6.5pt;
+      line-height: 1.55;
+      color: var(--text);
     }
 
     /* ── DIVIDER ── */
-    hr {
+    .divider {
       border: none;
       border-top: 1px solid var(--line);
-      margin: 3.5mm 0;
+      margin: 10px 32px;
     }
 
-    /* ── SECTIONS ── */
+    /* ── BODY ── */
+    .body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 0 32px;
+    }
+
+    /* ── SECTION ROW: label | mid | content ── */
     .section {
       display: grid;
-      grid-template-columns: var(--col-label) 1fr;
-      gap: 0 12px;
-      margin-bottom: 1mm;
+      grid-template-columns: 88px 160px 1fr;
+      gap: 0;
     }
 
-    .section-label {
-      font-size: 7pt;
+    .sec-label {
+      font-size: 6.5pt;
       font-weight: 700;
       letter-spacing: 1px;
       text-transform: uppercase;
-      padding-top: 1px;
+      padding-top: 2px;
       color: var(--text);
     }
 
-    .section-body { }
-
-    /* ── EXPERIENCE ENTRIES ── */
-    .entries {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0 8mm;
+    .sec-entries {
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--line);
+      padding-right: 16px;
+      margin-right: 16px;
     }
 
-    .entry {
-      margin-bottom: 3.5mm;
+    .sec-descriptions {
+      display: flex;
+      flex-direction: column;
     }
 
-    .entry .meta {
-      font-size: 7pt;
-      color: var(--muted);
-      margin-bottom: 2px;
+    /* ── EXPERIENCE ENTRY ── */
+    .exp-entry {
+      display: contents;
     }
 
-    .entry h3 {
+    .exp-mid {
+      padding-bottom: 10px;
+    }
+
+    .exp-mid .exp-title {
       font-size: 7.5pt;
-      font-weight: 600;
+      font-weight: 700;
+      text-transform: uppercase;
       line-height: 1.2;
+      margin-bottom: 2px;
+      letter-spacing: 0.2px;
+    }
+
+    .exp-mid .exp-company {
+      font-size: 6.5pt;
+      color: var(--muted);
       margin-bottom: 1px;
     }
 
-    .entry .company {
-      font-size: 7.5pt;
-      font-weight: 400;
+    .exp-mid .exp-date {
+      font-size: 6pt;
       color: var(--muted);
-      margin-bottom: 4px;
     }
 
-    .entry p {
+    .exp-desc {
       font-size: 6.5pt;
-      line-height: 1.4;
-      text-align: justify;
+      line-height: 1.55;
+      padding-bottom: 10px;
     }
 
     /* ── BOTTOM GRID ── */
+    .bottom-section {
+      display: grid;
+      grid-template-columns: 88px 1fr;
+      gap: 0;
+      margin-top: 4px;
+    }
+
     .bottom-grid {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 0 8mm;
+      gap: 0 20px;
     }
 
-    .col-section { }
-
-    .col-section .col-label {
-      font-size: 7pt;
+    .col-label {
+      font-size: 6.5pt;
       font-weight: 700;
       letter-spacing: 1px;
       text-transform: uppercase;
-      margin-bottom: 3mm;
+      margin-bottom: 8px;
     }
 
-    /* education entries */
     .edu-entry {
-      margin-bottom: 3mm;
+      margin-bottom: 8px;
     }
 
     .edu-entry .year {
-      font-size: 7pt;
+      font-size: 6pt;
       color: var(--muted);
       margin-bottom: 1px;
     }
 
     .edu-entry h4 {
       font-size: 7pt;
-      font-weight: 600;
+      font-weight: 700;
+      text-transform: uppercase;
       line-height: 1.2;
       margin-bottom: 1px;
+      letter-spacing: 0.2px;
     }
 
     .edu-entry .inst {
-      font-size: 7pt;
+      font-size: 6pt;
       color: var(--muted);
     }
 
     .edu-entry .tfg {
-      font-size: 7pt;
+      font-size: 6pt;
       color: var(--muted);
       font-style: italic;
       line-height: 1.4;
     }
 
-    /* awards */
     .award-entry {
-      margin-bottom: 3mm;
+      margin-bottom: 8px;
     }
 
     .award-entry .year {
-      font-size: 7pt;
+      font-size: 6pt;
       color: var(--muted);
       margin-bottom: 1px;
     }
 
     .award-entry h4 {
       font-size: 7pt;
-      font-weight: 600;
+      font-weight: 700;
+      text-transform: uppercase;
       line-height: 1.2;
       margin-bottom: 1px;
+      letter-spacing: 0.2px;
     }
 
     .award-entry .detail {
-      font-size: 7pt;
+      font-size: 6pt;
       color: var(--muted);
     }
 
-    /* skills bars */
-    .skill-group-title {
-      font-size: 7.5pt;
+    .skills-group {
+      margin-bottom: 8px;
+    }
+
+    .skills-group-title {
+      font-size: 6.5pt;
       font-weight: 600;
-      margin-bottom: 3mm;
-      margin-top: 1mm;
+      margin-bottom: 4px;
     }
 
-    .skill-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 3px;
+    .skills-list {
+      list-style: none;
+      padding: 0;
     }
 
-    .skill-name {
-      font-size: 7.5pt;
-      min-width: 60px;
-    }
-
-    .bar-track {
-      flex: 1;
-      height: 2px;
-      background: var(--line);
-      margin-left: 8px;
-      position: relative;
-    }
-
-    .bar-fill {
-      position: absolute;
-      left: 0; top: 0;
-      height: 100%;
-      background: var(--text);
+    .skills-list li {
+      font-size: 6.5pt;
+      line-height: 1.7;
+      color: var(--text);
     }
 
     /* ── FOOTER ── */
     .footer {
       display: flex;
       justify-content: space-between;
-      font-size: 7.5pt;
+      font-size: 6.5pt;
       color: var(--muted);
-      margin-top: 6mm;
-      padding-top: 3mm;
+      padding: 8px 32px;
       border-top: 1px solid var(--line);
+      margin-top: auto;
     }
 
     @media print {
-      body { background: none; }
-      .page { box-shadow: none; }
+      html, body { background: none; display: block; padding: 0; }
+      .page { width: 210mm; height: 297mm; box-shadow: none; }
     }
   </style>
 </head>
@@ -288,73 +305,88 @@
 
   <!-- HEADER -->
   <div class="header">
-    <div class="header-left">
+    <div class="header-name">
       <h1>Eduardo<br>García Vidal</h1>
-      <div class="titles">Arquitecto &nbsp;·&nbsp; BIM Coordinator</div>
-      <div class="bio">
-        Arquitecto con experiencia en proyectos de alta complejidad técnica, especializado en coordinación BIM, estándar Passive House y licitaciones públicas. Perfil polivalente con capacidad para liderar proyectos desde la fase de diseño hasta la ejecución, con dominio de herramientas avanzadas como Revit, Navisworks y Autodesk Construction Cloud.
+      <div class="job-title">Arquitecto &nbsp;·&nbsp; BIM Coordinator</div>
+      <div class="contact">
+        +34 644 54 72 79<br>
+        Edugarciarq@gmail.com<br>
+        Zaragoza, España
       </div>
     </div>
-    <div class="photo-placeholder"></div>
-  </div>
 
-  <hr>
+    <div class="header-photo"></div>
 
-  <!-- EXPERIENCIA -->
-  <div class="section">
-    <div class="section-label">Experiencia</div>
-    <div class="section-body">
-      <div class="entries">
-
-        <div class="entry">
-          <div class="meta">01/2023 &nbsp;·&nbsp; Zaragoza</div>
-          <h3>Arquitecto por encargo</h3>
-          <div class="company">Santiago Carroquino Arquitectos</div>
-          <p>Modelado 3D e infografías para el nuevo Centro Integrado de Coordinación de Emergencias de Aragón (CICEA).</p>
-        </div>
-
-        <div class="entry">
-          <div class="meta">06/2023 – 09/2023 &nbsp;·&nbsp; Zaragoza</div>
-          <h3>Arquitecto e Interiorista en Prácticas</h3>
-          <div class="company">BMZ Arquitectos</div>
-          <p>Documentación gráfica con AutoCAD, SketchUp e InDesign. Infografías con V-Ray y Photoshop. Diseño de interiores y mobiliario a medida en proyectos de rehabilitación residencial y hostelera.</p>
-        </div>
-
-        <div class="entry">
-          <div class="meta">09/2023 – 09/2024 &nbsp;·&nbsp; Zaragoza</div>
-          <h3>Arquitecto Passive House y BIM en Prácticas</h3>
-          <div class="company">BIONM Estudio</div>
-          <p>Proyectos de ejecución bajo estándar Passive House con Revit y BIM. Memorias técnicas, estudios de seguridad y salud y gestión de residuos. Visualización con Twinmotion y Enscape.</p>
-        </div>
-
-        <div class="entry">
-          <div class="meta">09/2025 – 01/2026 &nbsp;·&nbsp; Valencia</div>
-          <h3>Arquitecto BIM y Licitaciones Públicas</h3>
-          <div class="company">Negrosobreazul</div>
-          <p>Gestión integral de concursos públicos con BIM (Revit): oficinas de turismo, bibliotecas y vivienda colectiva. Liderazgo de equipos y coordinación de entregables.</p>
-        </div>
-
-        <div class="entry">
-          <div class="meta">01/2026 – 04/2026 &nbsp;·&nbsp; Huesca</div>
-          <h3>Arquitecto y BIM Coordinator — Data Centers</h3>
-          <div class="company">Carbonell Figueras</div>
-          <p>Coordinación BIM con Revit y Navisworks. Autodesk Construction Cloud y Forma. Detección de interferencias entre sistemas estructurales, MEP y arquitectónicos.</p>
-        </div>
-
-      </div>
+    <div class="header-bio">
+      <div class="bio-label">Perfil</div>
+      <p>Arquitecto con experiencia en proyectos de alta complejidad técnica, especializado en coordinación BIM, estándar Passive House y licitaciones públicas. Perfil polivalente con capacidad para liderar proyectos desde la fase de diseño hasta la ejecución, con dominio de herramientas avanzadas como Revit, Navisworks y Autodesk Construction Cloud.</p>
     </div>
   </div>
 
-  <hr>
+  <hr class="divider">
 
-  <!-- BOTTOM: EDUCACIÓN / PREMIOS / HABILIDADES -->
-  <div class="section">
-    <div class="section-label"></div>
-    <div class="section-body">
+  <div class="body">
+
+    <!-- EXPERIENCIA -->
+    <div class="section">
+      <div class="sec-label">Experiencia</div>
+      <div class="sec-entries">
+
+        <div class="exp-mid">
+          <div class="exp-title">Arquitecto por encargo</div>
+          <div class="exp-company">Santiago Carroquino Arquitectos</div>
+          <div class="exp-date">01/2023 · Zaragoza</div>
+        </div>
+
+        <div class="exp-mid">
+          <div class="exp-title">Arquitecto e Interiorista en Prácticas</div>
+          <div class="exp-company">BMZ Arquitectos</div>
+          <div class="exp-date">06/2023 – 09/2023 · Zaragoza</div>
+        </div>
+
+        <div class="exp-mid">
+          <div class="exp-title">Arquitecto Passive House y BIM en Prácticas</div>
+          <div class="exp-company">BIONM Estudio</div>
+          <div class="exp-date">09/2023 – 09/2024 · Zaragoza</div>
+        </div>
+
+        <div class="exp-mid">
+          <div class="exp-title">Arquitecto BIM y Licitaciones Públicas</div>
+          <div class="exp-company">Negrosobreazul</div>
+          <div class="exp-date">09/2025 – 01/2026 · Valencia</div>
+        </div>
+
+        <div class="exp-mid" style="padding-bottom:0">
+          <div class="exp-title">Arquitecto y BIM Coordinator — Data Centers</div>
+          <div class="exp-company">Carbonell Figueras</div>
+          <div class="exp-date">01/2026 – 04/2026 · Huesca</div>
+        </div>
+
+      </div>
+      <div class="sec-descriptions">
+
+        <div class="exp-desc">Modelado 3D e infografías para el nuevo Centro Integrado de Coordinación de Emergencias de Aragón (CICEA).</div>
+
+        <div class="exp-desc">Documentación gráfica con AutoCAD, SketchUp e InDesign. Infografías con V-Ray y Photoshop. Diseño de interiores y mobiliario a medida en proyectos de rehabilitación residencial y hostelera.</div>
+
+        <div class="exp-desc">Proyectos de ejecución bajo estándar Passive House con Revit y BIM. Memorias técnicas, estudios de seguridad y salud y gestión de residuos. Visualización con Twinmotion y Enscape.</div>
+
+        <div class="exp-desc">Gestión integral de concursos públicos con BIM (Revit): oficinas de turismo, bibliotecas y vivienda colectiva. Liderazgo de equipos y coordinación de entregables.</div>
+
+        <div class="exp-desc" style="padding-bottom:0">Coordinación BIM con Revit y Navisworks. Autodesk Construction Cloud y Forma. Detección de interferencias entre sistemas estructurales, MEP y arquitectónicos.</div>
+
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- BOTTOM -->
+    <div class="bottom-section">
+      <div class="sec-label" style="padding-top:2px"></div>
       <div class="bottom-grid">
 
         <!-- EDUCACIÓN -->
-        <div class="col-section">
+        <div>
           <div class="col-label">Educación</div>
 
           <div class="edu-entry">
@@ -378,7 +410,7 @@
         </div>
 
         <!-- PREMIOS -->
-        <div class="col-section">
+        <div>
           <div class="col-label">Premios</div>
 
           <div class="award-entry">
@@ -390,7 +422,7 @@
           <div class="award-entry">
             <div class="year">2022</div>
             <h4>Foro Cerámico HYSPALYT</h4>
-            <div class="detail">1er Premio Local &nbsp;·&nbsp; 2ª Mención Nacional</div>
+            <div class="detail">1er Premio Local · 2ª Mención Nacional</div>
           </div>
 
           <div class="award-entry">
@@ -401,78 +433,40 @@
         </div>
 
         <!-- HABILIDADES -->
-        <div class="col-section">
+        <div>
           <div class="col-label">Habilidades</div>
 
-          <div class="skill-group-title">Software</div>
-
-          <div class="skill-row">
-            <span class="skill-name">AutoCAD</span>
-            <div class="bar-track"><div class="bar-fill" style="width:95%"></div></div>
-          </div>
-          <div class="skill-row">
-            <span class="skill-name">Revit</span>
-            <div class="bar-track"><div class="bar-fill" style="width:90%"></div></div>
-          </div>
-          <div class="skill-row">
-            <span class="skill-name">SketchUp</span>
-            <div class="bar-track"><div class="bar-fill" style="width:85%"></div></div>
-          </div>
-          <div class="skill-row">
-            <span class="skill-name">V-Ray</span>
-            <div class="bar-track"><div class="bar-fill" style="width:75%"></div></div>
-          </div>
-          <div class="skill-row">
-            <span class="skill-name">Twinmotion</span>
-            <div class="bar-track"><div class="bar-fill" style="width:80%"></div></div>
-          </div>
-          <div class="skill-row">
-            <span class="skill-name">Enscape</span>
-            <div class="bar-track"><div class="bar-fill" style="width:80%"></div></div>
-          </div>
-          <div class="skill-row">
-            <span class="skill-name">Photoshop</span>
-            <div class="bar-track"><div class="bar-fill" style="width:85%"></div></div>
-          </div>
-          <div class="skill-row">
-            <span class="skill-name">InDesign</span>
-            <div class="bar-track"><div class="bar-fill" style="width:75%"></div></div>
-          </div>
-          <div class="skill-row">
-            <span class="skill-name">Navisworks</span>
-            <div class="bar-track"><div class="bar-fill" style="width:85%"></div></div>
-          </div>
-          <div class="skill-row">
-            <span class="skill-name">ArchiCAD</span>
-            <div class="bar-track"><div class="bar-fill" style="width:60%"></div></div>
-          </div>
-          <div class="skill-row">
-            <span class="skill-name">Q-GIS</span>
-            <div class="bar-track"><div class="bar-fill" style="width:55%"></div></div>
+          <div class="skills-group">
+            <div class="skills-group-title">Software</div>
+            <ul class="skills-list">
+              <li>AutoCAD</li>
+              <li>Revit</li>
+              <li>SketchUp</li>
+              <li>V-Ray</li>
+              <li>Twinmotion</li>
+              <li>Enscape</li>
+              <li>Photoshop</li>
+              <li>InDesign</li>
+              <li>Navisworks</li>
+              <li>ArchiCAD</li>
+              <li>Q-GIS</li>
+            </ul>
           </div>
 
-          <div class="skill-group-title" style="margin-top:4mm">Idiomas</div>
-
-          <div class="skill-row">
-            <span class="skill-name">Castellano</span>
-            <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
-          </div>
-          <div class="skill-row">
-            <span class="skill-name">Inglés</span>
-            <div class="bar-track"><div class="bar-fill" style="width:75%"></div></div>
-          </div>
-          <div class="skill-row">
-            <span class="skill-name">Francés</span>
-            <div class="bar-track"><div class="bar-fill" style="width:50%"></div></div>
-          </div>
-          <div class="skill-row">
-            <span class="skill-name">Alemán</span>
-            <div class="bar-track"><div class="bar-fill" style="width:30%"></div></div>
+          <div class="skills-group">
+            <div class="skills-group-title">Idiomas</div>
+            <ul class="skills-list">
+              <li>Castellano — Nativo</li>
+              <li>Inglés — B2</li>
+              <li>Francés — A2</li>
+              <li>Alemán — A1</li>
+            </ul>
           </div>
         </div>
 
       </div>
     </div>
+
   </div>
 
   <!-- FOOTER -->
