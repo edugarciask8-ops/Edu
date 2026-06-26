@@ -40,10 +40,11 @@
     .page {
       background: var(--bg);
       width: 794px;
-      min-height: 1123px;
+      height: 1123px;
       flex-shrink: 0;
-      padding: 53px 53px 45px 53px;
+      padding: 36px 44px 30px 44px;
       box-shadow: 0 4px 24px rgba(0,0,0,0.35);
+      overflow: hidden;
     }
 
     @media print {
@@ -64,44 +65,36 @@
     .header {
       display: grid;
       grid-template-columns: 1fr auto;
-      gap: 16px;
-      margin-bottom: 10mm;
+      gap: 12px;
+      margin-bottom: 6mm;
     }
 
     .header-left h1 {
-      font-size: 26pt;
+      font-size: 22pt;
       font-weight: 700;
       line-height: 1.05;
       letter-spacing: -0.5px;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .header-left .titles {
-      font-size: 8pt;
+      font-size: 7.5pt;
       font-weight: 400;
       color: var(--muted);
       letter-spacing: 0.5px;
-      margin-bottom: 10px;
+      margin-bottom: 7px;
     }
 
     .header-left .bio {
-      font-size: 8pt;
+      font-size: 7.5pt;
       color: var(--text);
       max-width: 110mm;
-      line-height: 1.55;
-    }
-
-    .photo {
-      width: 32mm;
-      height: 38mm;
-      object-fit: cover;
-      object-position: top;
-      filter: grayscale(100%);
+      line-height: 1.5;
     }
 
     .photo-placeholder {
-      width: 32mm;
-      height: 38mm;
+      width: 28mm;
+      height: 33mm;
       background: #b0aa9e;
     }
 
@@ -109,7 +102,7 @@
     hr {
       border: none;
       border-top: 1px solid var(--line);
-      margin: 5mm 0;
+      margin: 3.5mm 0;
     }
 
     /* ── SECTIONS ── */
@@ -117,7 +110,7 @@
       display: grid;
       grid-template-columns: var(--col-label) 1fr;
       gap: 0 12px;
-      margin-bottom: 2mm;
+      margin-bottom: 1mm;
     }
 
     .section-label {
@@ -139,7 +132,7 @@
     }
 
     .entry {
-      margin-bottom: 5mm;
+      margin-bottom: 3.5mm;
     }
 
     .entry .meta {
@@ -182,12 +175,12 @@
       font-weight: 700;
       letter-spacing: 1px;
       text-transform: uppercase;
-      margin-bottom: 4mm;
+      margin-bottom: 3mm;
     }
 
     /* education entries */
     .edu-entry {
-      margin-bottom: 4mm;
+      margin-bottom: 3mm;
     }
 
     .edu-entry .year {
@@ -217,7 +210,7 @@
 
     /* awards */
     .award-entry {
-      margin-bottom: 4mm;
+      margin-bottom: 3mm;
     }
 
     .award-entry .year {
