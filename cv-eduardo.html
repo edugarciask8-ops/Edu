@@ -15,8 +15,8 @@
       --muted: #7a7570;
       --line: #c0bab2;
       /* Unified grid — same columns top to bottom */
-      --c1: 250px;   /* labels / name */
-      --c2: 130px;   /* photo / job titles / degrees */
+      --c1: 310px;   /* labels / name */
+      --c2: 110px;   /* photo / job titles / degrees */
       --c3: 1fr;     /* bio / descriptions / years */
     }
 
@@ -86,13 +86,13 @@
       letter-spacing: 1.2px;
       text-transform: uppercase;
       margin-bottom: 7px;
-      padding-left: 180px;
+      padding-left: 140px;
     }
 
     .h-bio p {
       font-size: 6.5pt;
       line-height: 1.6;
-      padding-left: 180px;
+      padding-left: 140px;
       text-align: justify;
     }
 
@@ -237,13 +237,17 @@
     .sk-list {
       list-style: none;
       font-size: 6.5pt;
-      line-height: 1.85;
     }
 
-    .sk-list li::before {
-      content: '• ';
-      color: var(--muted);
+    .sk-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      line-height: 2;
     }
+
+    .d-on  { color: var(--text);  font-size: 5pt; letter-spacing: 1.5px; }
+    .d-off { color: var(--line);  font-size: 5pt; letter-spacing: 1.5px; }
 
     @media print {
       html, body { background: none; display: block; padding: 0; }
@@ -362,31 +366,31 @@
       <div>
         <div class="sk-col-title">Software</div>
         <ul class="sk-list">
-          <li>AutoCAD</li>
-          <li>Revit</li>
-          <li>SketchUp</li>
-          <li>V-Ray</li>
-          <li>Twinmotion</li>
-          <li>Enscape</li>
+          <li>AutoCAD   <span><span class="d-on">●●●●●</span></span></li>
+          <li>Revit      <span><span class="d-on">●●●●●</span></span></li>
+          <li>SketchUp  <span><span class="d-on">●●●●</span><span class="d-off">●</span></span></li>
+          <li>V-Ray      <span><span class="d-on">●●●</span><span class="d-off">●●</span></span></li>
+          <li>Twinmotion <span><span class="d-on">●●●</span><span class="d-off">●●</span></span></li>
+          <li>Enscape    <span><span class="d-on">●●●</span><span class="d-off">●●</span></span></li>
         </ul>
       </div>
       <div>
         <div class="sk-col-title">&nbsp;</div>
         <ul class="sk-list">
-          <li>Photoshop</li>
-          <li>InDesign</li>
-          <li>Navisworks</li>
-          <li>ArchiCAD</li>
-          <li>Q-GIS</li>
+          <li>Photoshop  <span><span class="d-on">●●●●</span><span class="d-off">●</span></span></li>
+          <li>InDesign   <span><span class="d-on">●●●</span><span class="d-off">●●</span></span></li>
+          <li>Navisworks <span><span class="d-on">●●●●</span><span class="d-off">●</span></span></li>
+          <li>ArchiCAD   <span><span class="d-on">●●</span><span class="d-off">●●●</span></span></li>
+          <li>Q-GIS      <span><span class="d-on">●●</span><span class="d-off">●●●</span></span></li>
         </ul>
       </div>
       <div>
         <div class="sk-col-title">Idiomas</div>
         <ul class="sk-list">
-          <li>Castellano — Nativo</li>
-          <li>Inglés — B2</li>
-          <li>Francés — A2</li>
-          <li>Alemán — A1</li>
+          <li>Castellano <span><span class="d-on">●●●●●</span></span></li>
+          <li>Inglés B2  <span><span class="d-on">●●●</span><span class="d-off">●●</span></span></li>
+          <li>Francés A2 <span><span class="d-on">●●</span><span class="d-off">●●●</span></span></li>
+          <li>Alemán A1  <span><span class="d-on">●</span><span class="d-off">●●●●</span></span></li>
         </ul>
       </div>
     </div>
